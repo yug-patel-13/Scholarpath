@@ -1,0 +1,49 @@
+.faq-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #f5faff;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .faq-container h1 {
+    text-align: center;
+    color: #003366;
+    margin-bottom: 30px;
+  }
+  
+  .faq-section details {
+    background: white;
+    padding: 15px 20px;
+    margin: 15px 0;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .faq-section summary {
+    font-size: 18px;
+    font-weight: bold;
+    color: #003366;
+    outline: none;
+  }
+  
+  .faq-section p {
+    padding-top: 10px;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .faq-section details[open] {
+    background-color: #e6f0ff;
+    border-color: #003366;
+  }
+  
+  /* Smooth animation */
+  details summary::marker {
+    font-size: 20px;
+  }
+  

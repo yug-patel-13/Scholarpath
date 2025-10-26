@@ -1,0 +1,56 @@
+/* Shared card style */
+[id^="ews"] {
+  border-radius: 12px;
+  padding: 20px;
+  margin: 30px auto;
+  max-width: 800px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+}
+
+/* Each card unique color */
+#ews1 {
+  background-color: #ebf8ff;
+  border: 2px solid #63b3ed;
+  color: #2a4365;
+}
+#ews1 h1 { color: #3182ce; }
+#ews1 a { color: #4299e1; }
+#ews1 a:hover { color: #2b6cb0; }
+
+#ews2 {
+  background-color: #fffaf0;
+  border: 2px solid #f6ad55;
+  color: #7b341e;
+}
+#ews2 h1 { color: #c05621; }
+#ews2 a { color: #dd6b20; }
+#ews2 a:hover { color: #9c4221; }
+
+#ews3 {
+  background-color: #f0fff4;
+  border: 2px solid #68d391;
+  color: #22543d;
+}
+#ews3 h1 { color: #2f855a; }
+#ews3 a { color: #38a169; }
+#ews3 a:hover { color: #276749; }
+
+#ews4 {
+  background-color: #fef2f2;
+  border: 2px solid #fc8181;
+  color: #742a2a;
+}
+#ews4 h1 { color: #e53e3e; }
+#ews4 a { color: #f56565; }
+#ews4 a:hover { color: #c53030; }
+
+/* No benefits card */
+#ewsNo {
+  background-color: #f7fafc;
+  border: 2px solid #a0aec0;
+  color: #2d3748;
+  text-align: center;
+}
+#ewsNo h1 { color: #4a5568; }

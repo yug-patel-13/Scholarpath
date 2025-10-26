@@ -1,0 +1,133 @@
+/* Main chat container */
+#chating {
+    position: relative;
+    height: 700px;
+    max-width: 700px;
+    background-color: #3e4444;
+    border: 20px solid #3b3a30;
+    border-bottom: none;
+    width: 100%; /* makes it responsive inside parent */
+}
+
+/* Chat layout handler */
+#handlebot {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    flex-wrap: wrap;
+    background-color: #282725;
+    width: 100%;
+}
+
+/* Chat input field */
+#chatinput {
+    margin-left: 20px;
+    margin-top: 40px;
+    height: 40px;
+    width: 600px;
+    border-radius: 10px;
+    padding: 5px 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    outline: none;
+    max-width: 100%; /* keeps it inside screen */
+}
+
+/* Chat submit button */
+#btnchat {
+    height: 50px;
+    width: 50px;
+    color: blue;
+    font-size: 20px;
+    border-radius: 50%;
+}
+
+/* Message container */
+#margans {
+    justify-content: space-between;
+    height: 760px;
+    overflow: scroll;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+}
+
+/* Bot message */
+.widthm {
+    width: 300px;
+    height: auto;
+    min-height: 30px;
+    border-radius: 10px;
+    border: none;
+    background-color: #588c7e;
+    color: white;
+    margin: 10px;
+}
+
+/* Bot wide message */
+.wide {
+    width: 700px;
+}
+
+/* User message */
+.widthm2 {
+    width: 340px;
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+    left: 340px;
+    height: auto;
+    min-height: 30px;
+    border-radius: 10px;
+    border: none;
+    background-color: #1f5a4a;
+    color: white;
+    margin: 10px;
+}
+
+/* User wide message */
+.wide2 {
+    width: 700px;
+}
+
+/* Chatbot profile image */
+#chatbotphoto {
+    position: absolute;
+    z-index: 1;
+    top: -50px;
+}
+
+/* Responsive Design: For screens 800px or less */
+@media (max-width: 800px) {
+    #handlebot {
+        margin-top: 60px;
+    }
+
+    #chating {
+        width: 200px;
+        max-width: 100%;
+    }
+
+    #chatinput {
+        width: 100px;
+        margin-left: 0;
+    }
+
+    .widthm,
+    .widthm2 {
+        width: 90%;
+        left: 0 !important;
+    }
+
+    .wide,
+    .wide2 {
+        width: 95%;
+    }
+
+    #btnchat {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+}

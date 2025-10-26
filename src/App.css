@@ -1,0 +1,159 @@
+#footer {
+  background-color: #222;
+  color: white;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.footer-container {
+  max-width: 900px;
+  margin: auto;
+}
+
+.social-icons a {
+  color: white;
+  margin: 0 10px;
+  font-size: 20px;
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: yellow;
+}
+
+.footer-email p,
+.footer-rights p {
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+#welcomebanner{
+position: absolute;
+  height: 475px;
+  width: 650px;
+  border: 2px solid blue;
+z-index: 100;
+background-color: white;
+
+top: 15%;
+
+animation: down 0.5s ease-in;
+}
+@keyframes down {
+  0%{
+    top: -700px;
+  }
+  100%{
+    top:15%
+  }
+  
+}
+#welcombannerc{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* Banner container: on top and clear */
+#welcombannerc {
+  position: relative;
+  z-index: 2; /* bring banner above */
+}
+
+/* Actual banner style */
+#welcomebanner {
+  text-align: center;
+  padding: 40px;
+  background: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  border-radius: 12px;
+}
+
+/* Everything else blurred */
+#welcombannerc ~ div, 
+#welcombannerc ~ #footer {
+  filter: blur(5px);
+  pointer-events: none; /* disable clicks on blurred part */
+}
+#band{
+
+  height: 40px;
+  width: 80px;
+  color: white;
+  border: none;
+  background-color: red;
+border-radius: 10px;
+flex-wrap: wrap;
+}
+#band:hover{
+  background-color: rgb(159, 3, 3);
+}
+@media (max-width:1200px) {
+
+  #welcomebanner{
+    width: 200px;
+    height: 150px;;
+    font-size: 5px;
+  }
+  #logomy{
+    height: 100px;
+    width: 100px;
+  }
+  
+}
+
+
+/* ================= SC BENEFITS ================= */
+#sc1 {
+  background-color: #fff5f7;
+  border: 2px solid #f687b3;
+  color: #702459;
+}
+#sc1 h1 { color: #d53f8c; }
+#sc1 a { color: #ed64a6; }
+#sc1 a:hover { color: #97266d; }
+
+#sc2 {
+  background-color: #f0f5ff;
+  border: 2px solid #7f9cf5;
+  color: #1a365d;
+}
+#sc2 h1 { color: #5a67d8; }
+#sc2 a { color: #667eea; }
+#sc2 a:hover { color: #2a4365; }
+
+/* ================= EWS BENEFITS ================= */
+#ews1 {
+  background-color: #f0fff4;
+  border: 2px solid #68d391;
+  color: #22543d;
+}
+#ews1 h1 { color: #2f855a; }
+#ews1 a { color: #38a169; }
+#ews1 a:hover { color: #276749; }
+
+#ews2 {
+  background-color: #fffaf0;
+  border: 2px solid #f6ad55;
+  color: #7b341e;
+}
+#ews2 h1 { color: #c05621; }
+#ews2 a { color: #dd6b20; }
+#ews2 a:hover { color: #9c4221; }
+
+#merit1 {
+  background-color: #ebf8ff;
+  border: 2px solid #63b3ed;
+  color: #2a4365;
+}
+#merit1 h1 { color: #3182ce; }
+#merit1 a { color: #4299e1; }
+#merit1 a:hover { color: #2b6cb0; }
+
+#merit2 {
+  background-color: #fefcbf;
+  border: 2px solid #ecc94b;
+  color: #744210;
+}
+#merit2 h1 { color: #d69e2e; }
+#merit2 a { color: #b7791f; }
+#merit2 a:hover { color: #975a16; }

@@ -1,0 +1,539 @@
+/* FarmerAdvanced.css
+   Responsive, clean, mobile-first styles for the Farmer advanced page.
+   Import in your component: import "./FarmerAdvanced.css";
+*/
+
+/* Root layout */
+.farmer-page {
+  font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+  color: #1a202c;
+  padding: 18px;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Header */
+.farmer-page > header,
+.farmer-page h1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.farmer-page h1 {
+  font-size: 1.4rem;
+  margin: 0 0 8px 0;
+  color: #1f2937;
+}
+
+/* Top controls (lang/new profile etc) */
+.top-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.top-controls button {
+  background: #edf2f7;
+  border: 1px solid #e2e8f0;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.top-controls button:hover { background: #e2e8f0; }
+
+/* Profiles bar */
+.profile-bar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin: 12px 0;
+  flex-wrap: wrap;
+}
+.profile-bar select {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+}
+.profile-bar button {
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  cursor: pointer;
+}
+.profile-bar .meta {
+  color: #718096;
+  font-size: 0.9rem;
+}
+
+/* Form grid */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 10px;
+}
+.form-grid label {
+  display: block;
+  font-size: 0.9rem;
+  color: #2d3748;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+.form-grid input[type="text"],
+.form-grid input[type="number"],
+.form-grid select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #e6edf3;
+  background: #fff;
+  box-sizing: border-box;
+  outline: none;
+}
+.form-grid input:focus,
+.form-grid select:focus {
+  box-shadow: 0 0 0 3px rgba(66,153,225,0.12);
+  border-color: #3182ce;
+}
+
+/* Wide controls row (documents, buttons) */
+.controls-row {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+.controls-row input[type="file"] { font-size: 0.9rem; }
+
+/* Action buttons */
+.actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  grid-column: 1 / -1;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.btn {
+  padding: 10px 14px;
+  background: #2b6cb0;
+  color: #fff;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+}
+.btn.secondary {
+  background: #edf2f7;
+  color: #1f2937;
+  border: 1px solid #e2e8f0;
+}
+.btn.ghost {
+  background: transparent;
+  border: 1px dashed #e2e8f0;
+  color: #475569;
+}
+
+/* Simulator box */
+.simulator {
+  margin-top: 18px;
+  padding: 12px;
+  border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid #edf2f7;
+}
+.simulator h3 { margin: 0 0 10px 0; }
+.simulator .sim-row {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.simulator label { font-size: 0.9rem; color: #4a5568; }
+.simulator input[type="range"] { width: 200px; }
+
+/* Eligible schemes list */
+.eligible-list {
+  margin-top: 18px;
+}
+
+/* grid wrapper for scheme cards (set in JSX as .scheme-grid) */
+.scheme-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+/* Scheme card: single-column full-width stacked card */
+.scheme-card {
+  border-radius: 12px;
+  padding: 16px;
+  background: #fff;
+  border: 1px solid #e6f2ff;
+  display: block;
+  box-shadow: 0 6px 18px rgba(14, 26, 43, 0.04);
+  box-sizing: border-box;
+  width: 100%;
+}
+.scheme-card .scheme-header {
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.scheme-title { margin: 0; color: #1f4068; font-size: 1.05rem; line-height: 1.2; }
+.scheme-desc { margin: 8px 0 0 0; color: #475569; font-size: 0.95rem; line-height: 1.5; white-space: normal; word-break: break-word; overflow-wrap: anywhere; }
+.scheme-link { display: inline-block; margin-top: 8px; color: #2b6cb0; text-decoration: none; font-weight: 600; }
+
+/* Right area in card for amount and actions (rendered in header) */
+.scheme-right { min-width: 120px; text-align: right; display:flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.scheme-amount { font-weight: 800; color: #2b6cb0; font-size: 1.05rem; }
+.scheme-actions { margin-top: 8px; display:flex; gap:8px; justify-content: flex-end; flex-wrap: wrap; }
+
+/* Step tracker box */
+.step-tracker {
+  margin-top: 12px;
+  padding: 12px;
+  background: #f4f8ff;
+  border-radius: 8px;
+  border: 1px solid #e6f2ff;
+}
+.step-tracker ol { margin: 8px 0 0 18px; padding: 0; color: #2d3748; }
+.step-tracker li { margin-bottom: 8px; font-size: 0.95rem; }
+
+/* Progress bar */
+.progress-bar {
+  width: 100%;
+  background: #e6edf3;
+  height: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+.progress-bar .fill {
+  height: 10px;
+  background: linear-gradient(90deg, #48bb78, #38a169);
+  width: 0%;
+  transition: width 300ms ease;
+}
+
+/* Document checklist / validator */
+.doc-check {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.doc-pill {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  font-weight: 600;
+  color: #4a5568;
+}
+.doc-pill.ok { background: #f0fff4; border-color: #68d391; color: #22543d; }
+.doc-pill.missing { background: #fff5f5; border-color: #fc8181; color: #9b2c2c; }
+
+/* Walkthrough card */
+.walkthrough {
+  margin-top: 8px;
+  padding: 8px;
+  border-radius: 8px;
+  background: #fbfdff;
+  border: 1px dashed #e6f2ff;
+}
+.walkthrough video {
+  width: 100%;
+  border-radius: 8px;
+  background: #000;
+}
+
+/* Sharing and QR area */
+.share-row {
+  margin-top: 16px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.qr-box {
+  padding: 10px;
+  border: 1px solid #e6f2ff;
+  border-radius: 8px;
+  display: inline-block;
+  background: #fff;
+}
+
+/* Debug / small prints */
+.debug {
+  margin-top: 12px;
+  font-size: 0.85rem;
+  color: #718096;
+}
+
+/* Footer summary */
+.summary {
+  margin-top: 18px;
+  padding: 12px;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid #edf2f7;
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.summary strong { color: #1f2937; }
+
+/* Responsive tweaks */
+@media (max-width: 900px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .scheme-card { grid-template-columns: 1fr; }
+  .scheme-right { width: 100%; text-align: left; align-items: flex-start; }
+  .simulator .sim-row { flex-direction: column; gap: 12px; }
+}
+
+@media (max-width: 480px) {
+  .farmer-page { padding: 12px; }
+  .top-controls button { padding: 6px 8px; font-size: 0.9rem; }
+  .btn { padding: 8px 10px; font-size: 0.95rem; }
+  .qr-box { transform: scale(0.9); }
+  .walkthrough video { height: 180px; object-fit: cover; }
+}
+/* FarmerAdvanced.css
+   Clean, eyecatching, mobile-first CSS for the Farmer Advanced page
+   Save to: src/components/FarmerAdvanced.css
+*/
+
+/* ---------- Root ---------- */
+.farmer-page {
+  font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+  color: #0f1724;
+  background: linear-gradient(180deg,#fbfdff 0%, #f7fafc 100%);
+  padding: 20px;
+  max-width: 1200px;
+  margin: 18px auto;
+  box-sizing: border-box;
+  border-radius: 12px;
+  border: 1px solid rgba(15,23,36,0.04);
+}
+
+/* ---------- Header ---------- */
+.header-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.page-title {
+  font-size: 1.4rem;
+  color: #022c43;
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: -0.2px;
+}
+.header-actions { display:flex; gap:8px; align-items:center; }
+
+/* ---------- Profiles bar ---------- */
+.profiles-row {
+  display:flex;
+  gap:12px;
+  align-items:center;
+  margin-bottom: 14px;
+  flex-wrap:wrap;
+}
+.profiles-row select,
+.profiles-row button {
+  padding:8px 10px;
+  border-radius:8px;
+  border:1px solid #e6eef8;
+  background:#fff;
+  font-weight:600;
+  cursor:pointer;
+}
+
+/* ---------- Form grid ---------- */
+.form-grid {
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:12px;
+  padding:14px;
+  background: linear-gradient(180deg,#ffffff 0%, #fbfdff 100%);
+  border-radius: 12px;
+  border: 1px solid #eef6ff;
+  box-shadow: 0 10px 30px rgba(2,44,67,0.03);
+}
+.form-grid label {
+  display:block;
+  color:#0f1724;
+  font-size:0.9rem;
+  margin-bottom:6px;
+  font-weight:700;
+}
+.form-grid input[type="text"],
+.form-grid input[type="number"],
+.form-grid select {
+  width:100%;
+  padding:10px 12px;
+  border-radius:10px;
+  border:1px solid #d9e9ff;
+  background:#fff;
+  outline:none;
+  transition: box-shadow .15s ease, border-color .15s ease;
+}
+.form-grid input:focus,
+.form-grid select:focus {
+  border-color:#3b82f6;
+  box-shadow:0 6px 18px rgba(59,130,246,0.08);
+}
+
+/* wide row (file + buttons) */
+.wide-row {
+  grid-column: 1 / -1;
+  display:flex;
+  gap:8px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+
+/* ---------- Actions ---------- */
+.actions-row {
+  grid-column: 1 / -1;
+  display:flex;
+  gap:8px;
+  margin-top:8px;
+  flex-wrap:wrap;
+}
+.btn {
+  padding:10px 14px;
+  border-radius:10px;
+  border:none;
+  background: #0ea5d7;
+  color: #fff;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow: 0 8px 20px rgba(14,165,215,0.12);
+}
+.btn.secondary {
+  background:#fff;
+  color:#0f1724;
+  border:1px solid #e6eef8;
+  box-shadow:none;
+}
+
+/* ---------- Simulator ---------- */
+.simulator {
+  margin-top:16px;
+  padding:14px;
+  border-radius:10px;
+  background: linear-gradient(180deg,#ffffff 0%, #f8fbff 100%);
+  border:1px solid #eef6ff;
+}
+.sim-row { display:flex; gap:18px; align-items:center; flex-wrap:wrap; }
+.sim-row .sim-control { min-width:160px; }
+
+/* ---------- Eligible list & card ---------- */
+.eligible-list {
+  margin-top: 18px;
+}
+
+.scheme-desc {
+  color: #475569;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.scheme-link {
+  color: #0ea5d7;
+  font-weight: 700;
+  display: inline-block;
+  margin-top: 8px;
+  text-decoration: none;
+  word-break: break-word;
+}
+.scheme-right {
+  width: 220px;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  min-width: 120px;
+}
+
+/* amount & action */
+.scheme-amount { font-size:1.05rem; font-weight:900; color:#0ea5d7; }
+.scheme-actions { display:flex; gap:8px; }
+
+/* ---------- Step tracker ---------- */
+.step-tracker {
+  margin-top:12px;
+  padding:12px;
+  border-radius:10px;
+  background: linear-gradient(180deg,#f5fbff 0%, #ffffff 100%);
+  border:1px solid #e6f8ff;
+}
+.step-tracker ol { margin:8px 0 0 18px; padding:0; }
+.step-tracker li { margin-bottom:8px; color:#123; font-size:0.95rem; }
+
+/* progress bar */
+.progress-bar {
+  margin-top:8px;
+  height:10px;
+  background:#e6f2fb;
+  border-radius:999px;
+  overflow:hidden;
+}
+.progress-fill {
+  height:100%;
+  width:0%;
+  background: linear-gradient(90deg,#34d399,#10b981);
+  transition: width .4s ease;
+}
+
+/* ---------- Docs / Walkthrough ---------- */
+.doc-check { margin-top:10px; display:flex; gap:8px; flex-wrap:wrap; }
+.doc-pill { padding:6px 10px; border-radius:999px; border:1px solid #e6eef8; background:#fff; font-weight:700; color:#374151; }
+.doc-pill.ok { background:#f0fff4; border-color:#bbf7d0; color:#065f46; }
+.doc-pill.missing { background:#fff5f5; border-color:#fecaca; color:#7f1d1d; }
+
+.walkthrough {
+  margin-top:8px;
+  padding:12px;
+  border-radius:10px;
+  background:#fbfdff;
+  border:1px dashed #e6f7ff;
+}
+
+/* ---------- Sharing / QR ---------- */
+.share-row { margin-top:18px; display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+.qr-box { padding:10px; border-radius:8px; background:#fff; border:1px solid #eef6ff; }
+
+/* ---------- Summary / debug ---------- */
+.summary { margin-top:18px; padding:12px; border-radius:10px; display:flex; justify-content:space-between; align-items:center; border:1px solid #eef6ff; background:#fff; }
+.debug { color:#6b7280; font-size:0.9rem; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .scheme-card { grid-template-columns: 1fr; }
+  .scheme-right { width: 100%; text-align: left; align-items: flex-start; }
+  .scheme-actions { width: 100%; display: flex; gap: 8px; }
+  .scheme-actions .btn { flex: 1; }
+  .header-row { flex-direction: column; align-items: flex-start; gap: 8px; }
+}
+@media (max-width:480px) {
+  .page-title { font-size:1.1rem; }
+  .btn { padding:8px 10px; font-size:0.95rem; }
+  .qr-box { transform: scale(.95); }
+}

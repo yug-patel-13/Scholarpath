@@ -1,0 +1,64 @@
+{
+  "about": {
+    "hero": {
+      "title": "About Us",
+      "description": "The government provides many scholarships, but most of us are unaware of them. Our mission is to bridge this gap and bring the right information to deserving individuals."
+    },
+    "mission": {
+      "title": "🎯 Our Goal",
+      "description": "We believe every student, farmer, woman, and economically weaker section member deserves equal opportunity. This platform is built to help such individuals discover the scholarships they truly deserve."
+    },
+    "features": {
+      "title": "💡 What We Offer",
+      "list": [
+        "✅ Easy access to scholarship info",
+        "✅ Category-based scholarship finder",
+        "✅ Verified and regularly updated data",
+        "✅ 100% free and user-friendly platform"
+      ]
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "Get scholarship as :"
+    },
+    "categories": {
+      "farmer": "farmer",
+      "sc": "(SC/ST/OBC/EBC)",
+      "women": "Girl Students/Women",
+      "ews": "EWS",
+      "merit": "Merit-Based Students"
+    },
+    "benefits": {
+      "title": "Why Use Our Platform?",
+      "list": [
+        "✔ 100% Free to Use",
+        "✔ Personalized Matching",
+        "✔ Government Verified Data",
+        "✔ Easy & Fast Search"
+      ]
+    },
+    "chatbot": {
+      "message": "doubt? chat with us"
+    }
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+  
+        "q1": "Who can apply for scholarships?",
+        "a1": "Students from various categories like farmers, SC/ST/OBC, women, EWS, and merit-based individuals can apply if they meet the eligibility criteria.",
+  
+        "q2": "Is this platform free to use?",
+        "a2": "Yes, 100% free. You can search and explore all available scholarships without any charges.",
+    
+        "q3": "How do I know which scholarships I am eligible for?",
+        "a3": "Just select your category and answer a few questions. Our platform will filter the scholarships that best match your profile.",
+     
+        "q4": "Are the scholarships provided by the government?",
+        "a4": "Yes, all scholarships listed on our site are verified and issued by central or state governments.",
+     
+        "q5": "How often is the data updated?",
+        "a5": "We update our database regularly to include new schemes and remove expired ones."
+      
+  }
+}
