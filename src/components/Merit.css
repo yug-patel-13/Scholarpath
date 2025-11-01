@@ -1,69 +1,492 @@
-/* Container */
-#merit-container {
-  max-width: 600px;
-  margin: 50px auto;
-  padding: 20px;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+/* Merit Page Modern CSS */
+.merit-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 40px 20px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.merit-form-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  width: 100%;
+  overflow: hidden;
+}
+
+.page-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
   text-align: center;
+  margin-bottom: 15px;
 }
 
-/* Title */
-#merit-title {
-  font-size: 28px;
-  font-weight: bold;
+.page-description {
+  font-size: 1.1rem;
+  color: #666;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* Form Sections */
+.form-section {
+  margin-bottom: 40px;
+  padding-bottom: 30px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.form-section:last-of-type {
+  border-bottom: none;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #667eea;
   margin-bottom: 25px;
-  color: #2c3e50;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e0e7ff;
 }
 
-/* Input fields */
-#merit-name,
-#merit-age,
-#merit-income,
-#merit-caste {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
+/* Form Grid */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+.required {
+  color: #dc3545;
+}
+
+.form-group input,
+.form-group select {
+  padding: 12px 15px;
+  border: 2px solid #e0e0e0;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group select:focus {
   outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
-#merit-name:focus,
-#merit-age:focus,
-#merit-income:focus,
-#merit-caste:focus {
-  border-color: #3498db;
-  box-shadow: 0 0 6px rgba(52, 152, 219, 0.5);
+/* Form Actions */
+.form-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 40px;
+  padding-top: 30px;
+  border-top: 2px solid #f0f0f0;
 }
 
-/* Submit button */
-#merit-submit {
-  width: 100%;
-  padding: 12px;
-  margin-top: 20px;
-  background: #3498db;
-  color: white;
-  font-size: 18px;
+.btn-primary,
+.btn-secondary {
+  padding: 14px 30px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
   border: none;
-  border-radius: 8px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
 }
 
-#merit-submit:hover {
-  background: #2980b9;
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
 }
 
-/* Result box */
-#merit-result {
-  margin-top: 25px;
-  padding: 15px;
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #5a6268;
+  transform: translateY(-2px);
+}
+
+/* Results Section */
+.results-section {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  box-sizing: border-box;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.results-subtitle {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 40px;
+}
+
+.scholarships-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 35px;
+  margin-bottom: 40px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.scholarship-card {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  transition: all 0.3s ease;
+  border: 1px solid #f0f0f0;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+.scholarship-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+  border-color: #667eea;
+}
+
+.scholarship-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 25px;
+  padding-bottom: 25px;
+  border-bottom: 2px solid #f0f0f0;
+  gap: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+}
+
+.scholarship-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+  flex: 1;
+  line-height: 1.3;
+  min-width: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.scholarship-amount {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #28a745;
+  background: #d4edda;
+  padding: 8px 15px;
   border-radius: 8px;
-  font-size: 18px;
-  font-weight: 500;
-  color: #2c3e50;
-  background: #ecf0f1;
+}
+
+.scholarship-description {
+  color: #666;
+  line-height: 1.8;
+  margin-bottom: 30px;
+  font-size: 1.05rem;
+  width: 100%;
+  box-sizing: border-box;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.scholarship-steps,
+.required-documents {
+  margin-bottom: 30px;
+}
+
+.scholarship-steps h3,
+.required-documents h3 {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.step-group {
+  margin-bottom: 20px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.step-group h4 {
+  font-size: 1rem;
+  color: #667eea;
+  margin-bottom: 10px;
+}
+
+.step-group ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.step-group li,
+.required-documents li {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.scholarship-actions {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+  padding-top: 30px;
+  border-top: 2px solid #f0f0f0;
+  justify-content: flex-start;
+}
+
+.scholarship-actions .btn-primary,
+.scholarship-actions .btn-secondary {
+  padding: 10px 20px;
+  font-size: 0.9rem;
+}
+
+/* Scholarship Action Buttons - Calm Blue/Green Colors */
+.btn-link,
+.scholarship-actions .btn-primary {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: #ffffff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  letter-spacing: 0.3px;
+}
+
+.btn-link:hover,
+.scholarship-actions .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
+  background: linear-gradient(135deg, #3a9ee6 0%, #00d9e6 100%);
+  color: #ffffff;
+}
+
+.btn-link:active,
+.scholarship-actions .btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-download,
+.scholarship-actions .btn-secondary {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  color: #ffffff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 15px rgba(67, 233, 123, 0.3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  letter-spacing: 0.3px;
+}
+
+.btn-download:hover,
+.scholarship-actions .btn-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(67, 233, 123, 0.4);
+  background: linear-gradient(135deg, #35d66b 0%, #2de5c5 100%);
+  color: #ffffff;
+}
+
+.btn-download:active,
+.scholarship-actions .btn-secondary:active {
+  transform: translateY(0);
+}
+
+.btn-request {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  letter-spacing: 0.3px;
+}
+
+.btn-request:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  background: linear-gradient(135deg, #5568d3 0%, #653d91 100%);
+  color: #ffffff;
+}
+
+.btn-request:active {
+  transform: translateY(0);
+}
+
+.no-results {
+  text-align: center;
+  padding: 60px 20px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.no-results p {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.actions-row {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .merit-form-wrapper {
+    padding: 30px 20px;
+  }
+
+  .page-title {
+    font-size: 2rem;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+  }
+
+  .results-section {
+    max-width: 100%;
+    padding: 30px 15px;
+  }
+
+  .scholarships-grid {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  .scholarship-card {
+    padding: 25px 20px;
+  }
+
+  .scholarship-title {
+    font-size: 1.4rem;
+  }
+
+  .scholarship-header {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .scholarship-actions {
+    flex-direction: column;
+  }
+
+  .scholarship-actions .btn-primary,
+  .scholarship-actions .btn-secondary,
+  .scholarship-actions .btn-link,
+  .scholarship-actions .btn-download,
+  .scholarship-actions .btn-request {
+    width: 100%;
+  }
+}
+
+@media (max-width: 568px) {
+  .merit-container {
+    padding: 20px 10px;
+  }
+
+  .merit-form-wrapper {
+    padding: 20px 15px;
+  }
+
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  .results-section {
+    padding: 20px 10px;
+  }
+
+  .scholarship-card {
+    padding: 20px 15px;
+  }
+
+  .scholarship-title {
+    font-size: 1.2rem;
+  }
+
+  .scholarship-description {
+    font-size: 1rem;
+  }
 }

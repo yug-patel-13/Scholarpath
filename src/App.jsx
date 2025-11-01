@@ -15,33 +15,24 @@ import Woman from './components/Woman'
 import Sc from './components/Sc'
 import Ews from './components/Ews'
 import Merit from './components/Merit'
+import { AuthProvider, useAuth } from './context/AuthContext'
+import Admin from './components/Admin'
+import FormFillRequest from './components/FormFillRequest'
 
+const AppContent = () => {
+  const { user } = useAuth();
+  const [username,setusername]=useState(user?.name || "Login")
 
-
-const App = () => {
-
-  const [username,setusername]=useState("Login")
-  const [show,setshow]=useState(true)
-
-  const showing=()=>{
-    setshow(false)
-  }
+  React.useEffect(() => {
+    if (user) {
+      setusername(user.name || "welcome-back");
+    } else {
+      setusername("Login");
+    }
+  }, [user]);
 
   return (
     <>
-    {show && (
-    <div id='welcombannerc'>
-         
-    <div id="welcomebanner">
- 
-<img src="scoimg.png" alt="logo" id='logomy'/>
-<h2>welcome , We hope your best</h2>
-<h1 style={{color:"red"}}>You need to Login to get your benefits</h1>
-  <button onClick={showing} id='band' >Close</button>
-
-    </div>
-    </div>
-    )}
     <div>
           <Router>
   <Main username={username} setusername={setusername}/>
@@ -58,14 +49,10 @@ const App = () => {
       <Route path='/sc' element={<Sc/>}/>
       <Route path='/woman' element={<Woman/>}/>
       <Route path='/ews' element={<Ews/>}/>
-
-    <Route path='/merit' element={<Merit/>}/>
-
-         
+      <Route path='/merit' element={<Merit/>}/>
+      <Route path='/admin' element={<Admin/>}/>
+      <Route path='/form-fill-request' element={<FormFillRequest/>}/>
       <Route path='/chatbot' element={<Chat/>}/>
-     
-
-   
       </Routes>
       </Router>
       
@@ -102,6 +89,14 @@ const App = () => {
     </div>
     </>
   )
+}
+
+const App = () => {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
+  );
 }
 
 export default App

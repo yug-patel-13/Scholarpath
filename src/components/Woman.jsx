@@ -1,174 +1,588 @@
-import React, { useState } from 'react';
-import './Woman.css';
+import React, { useState, useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import { userAPI as userProfileAPI, scholarshipAPI } from '../services/api';
+import { jsPDF } from 'jspdf';
+import './Merit.css';
 
 const Woman = () => {
-  const [Wname, setWname] = useState('');
-  const [Wnum, setWnum] = useState('');
-  const [Wmail, setWmail] = useState('');
-  const [Wage, setWage] = useState('');
-  const [Wincome, setWincome] = useState('');
+  const { user, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    age: '',
+    gender: 'female',
+    state: '',
+    district: '',
+    city: '',
+    pincode: '',
+    annualIncome: '',
+    aadhaar: '',
+    bankAccount: '',
+    ifscCode: '',
+    // Woman-specific fields
+    isPregnant: '',
+    isWidow: '',
+    isStudent: '',
+    isWorking: '',
+    hasBankAccount: '',
+    marks12: '', // Only for AICTE Pragati
+  });
 
-  const [HandleForm, setForm] = useState(true);
+  const [scholarships, setScholarships] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
-  const [HandleB1, setB1] = useState(false);
-  const [HandleB2, setB2] = useState(false);
-  const [HandleB3, setB3] = useState(false);
-  const [HandleB4, setB4] = useState(false);
-  const [HandleB5, setB5] = useState(false);
-  const [HandleNo, setNo] = useState(false);
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/Login');
+      return;
+    }
+    if (user) {
+      loadProfile();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated, user, navigate]);
 
-  // Radio states
-  const [isWidow, setIsWidow] = useState('');
-  const [isPregnant, setIsPregnant] = useState('');
-  const [isStudent, setIsStudent] = useState('');
-  const [hasBank, setHasBank] = useState('');
-  const [isWorking, setIsWorking] = useState('');
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (!Wname.trim()) return alert("Please enter your name");
-    if (!Wnum.trim()) return alert("Please enter your mobile number");
-    if (!Wmail.trim()) return alert("Please enter your email");
-    if (!Wage.trim()) return alert("Please enter your age");
-    if (!Wincome.trim()) return alert("Please enter your annual income");
-    if (!isWidow) return alert("Please select widow status");
-    if (!isPregnant) return alert("Please select pregnancy status");
-    if (!isStudent) return alert("Please select student status");
-    if (!hasBank) return alert("Please select bank account status");
-    if (!isWorking) return alert("Please select working status");
-
-    setForm(false);
-
-    const eligibleForPMMVY = isPregnant === 'yes' && hasBank === 'yes';
-    if (eligibleForPMMVY) setB1(true);
-
-    const eligibleForWidowPension = isWidow === 'yes' && Wincome <= 120000;
-    if (eligibleForWidowPension) setB2(true);
-
-    const eligibleForBetiBachao = isStudent === 'yes' && Number(Wage) <= 18;
-    if (eligibleForBetiBachao) setB3(true);
-
-    const eligibleForStandUp = isWorking === 'yes' && hasBank === 'yes';
-    if (eligibleForStandUp) setB4(true);
-
-    const eligibleForJananiSuraksha = isPregnant === 'yes' && hasBank === 'yes';
-    if (eligibleForJananiSuraksha) setB5(true);
-
-    if (!eligibleForPMMVY && !eligibleForWidowPension && !eligibleForBetiBachao && !eligibleForStandUp && !eligibleForJananiSuraksha) {
-      setNo(true);
+  const loadProfile = async () => {
+    try {
+      const response = await userProfileAPI.getProfile(user.id);
+      if (response.data) {
+        setFormData({
+          name: response.data.name || user.name || '',
+          email: user.email || '',
+          phone: response.data.phone || user.phone || '',
+          age: response.data.age || '',
+          gender: 'female',
+          state: response.data.state || '',
+          district: response.data.district || '',
+          city: response.data.city || '',
+          pincode: response.data.pincode || '',
+          annualIncome: response.data.annualIncome || '',
+          aadhaar: response.data.aadhaar || '',
+          bankAccount: '',
+          ifscCode: '',
+          isPregnant: '',
+          isWidow: '',
+          isStudent: '',
+          isWorking: '',
+          hasBankAccount: '',
+          marks12: response.data.marks12 || '',
+        });
+      }
+    } catch (error) {
+      console.error('Error loading profile:', error);
     }
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const profileData = {
+        userId: user.id,
+        category: 'woman',
+        name: formData.name,
+        age: parseInt(formData.age),
+        gender: 'female',
+        phone: formData.phone,
+        state: formData.state,
+        district: formData.district,
+        city: formData.city,
+        pincode: formData.pincode,
+        annualIncome: formData.annualIncome ? parseFloat(formData.annualIncome) : null,
+        marks12: formData.marks12 ? parseFloat(formData.marks12) : null,
+        aadhaar: formData.aadhaar,
+      };
+
+      await userProfileAPI.createProfile(profileData);
+      const eligibleResponse = await scholarshipAPI.getEligible(user.id);
+      setScholarships(eligibleResponse.data);
+      setSubmitted(true);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('Error submitting form. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const downloadPDF = (scholarship) => {
+    const doc = new jsPDF();
+    doc.setFontSize(20);
+    doc.text(scholarship.title, 105, 20, { align: 'center' });
+
+    let y = 40;
+    doc.setFontSize(12);
+    doc.text('Description:', 20, y);
+    y += 10;
+    const descLines = doc.splitTextToSize(scholarship.description || 'No description available', 170);
+    doc.text(descLines, 20, y);
+    y += descLines.length * 7;
+
+    if (scholarship.amount) {
+      y += 5;
+      doc.setFontSize(14);
+      doc.text(`Amount: ₹${scholarship.amount.toLocaleString('en-IN')}`, 20, y);
+      y += 10;
+    }
+
+    if (scholarship.link) {
+      doc.setFontSize(10);
+      doc.text('Official Link: ' + scholarship.link, 20, y);
+      y += 10;
+    }
+
+    if (scholarship.steps && scholarship.steps.length > 0) {
+      y += 5;
+      doc.setFontSize(14);
+      doc.text('Application Steps:', 20, y);
+      y += 10;
+      doc.setFontSize(10);
+      scholarship.steps.forEach((step) => {
+        if (y > 250) {
+          doc.addPage();
+          y = 20;
+        }
+        doc.setFontSize(12);
+        doc.text(step.title + ':', 25, y);
+        y += 7;
+        doc.setFontSize(10);
+        step.items.forEach((item) => {
+          if (y > 250) {
+            doc.addPage();
+            y = 20;
+          }
+          doc.text('• ' + item, 30, y);
+          y += 7;
+        });
+        y += 3;
+      });
+    }
+
+    if (scholarship.requiredDocuments && scholarship.requiredDocuments.length > 0) {
+      if (y > 230) {
+        doc.addPage();
+        y = 20;
+      }
+      doc.setFontSize(14);
+      doc.text('Required Documents:', 20, y);
+      y += 10;
+      doc.setFontSize(10);
+      scholarship.requiredDocuments.forEach((docName) => {
+        if (y > 250) {
+          doc.addPage();
+          y = 20;
+        }
+        doc.text('• ' + docName.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()), 25, y);
+        y += 7;
+      });
+    }
+
+    doc.save(`${scholarship.title.replace(/[^a-z0-9]/gi, '_')}.pdf`);
+  };
+
+  if (submitted) {
+    return (
+      <div className="merit-container">
+        <div className="merit-form-wrapper">
+          <h1 className="page-title">Eligible Scholarships & Benefits for Women</h1>
+          <p className="page-description">
+            You are eligible for {scholarships.length} scholarship(s) based on your profile
+          </p>
+
+          {scholarships.length === 0 ? (
+            <div className="no-results">
+              <p>Sorry, you are not eligible for any scholarships based on your current profile.</p>
+              <button onClick={() => setSubmitted(false)} className="btn-primary">
+                Update Profile
+              </button>
+            </div>
+          ) : (
+            <div className="scholarships-grid">
+              {scholarships.map((scholarship) => (
+                <div key={scholarship.id} className="scholarship-card">
+                  <div className="scholarship-header">
+                    <h3 className="scholarship-title">{scholarship.title}</h3>
+                    {scholarship.amount && (
+                      <div className="scholarship-amount">
+                        ₹{scholarship.amount.toLocaleString('en-IN')}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="scholarship-description">
+                    {scholarship.description}
+                  </div>
+
+                  {scholarship.steps && scholarship.steps.length > 0 && (
+                    <div className="scholarship-steps">
+                      <h4>Application Steps:</h4>
+                      {scholarship.steps.map((step, idx) => (
+                        <div key={idx} className="step-section">
+                          <strong>{step.title}:</strong>
+                          <ul>
+                            {step.items.map((item, i) => (
+                              <li key={i}>{item}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {scholarship.requiredDocuments && scholarship.requiredDocuments.length > 0 && (
+                    <div className="required-documents">
+                      <h4>Required Documents:</h4>
+                      <ul>
+                        {scholarship.requiredDocuments.map((doc, idx) => (
+                          <li key={idx}>
+                            {doc.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  <div className="scholarship-actions">
+                    {scholarship.link && (
+                      <a
+                        href={scholarship.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-link"
+                      >
+                        Visit Official Website
+                      </a>
+                    )}
+                    <button
+                      onClick={() => downloadPDF(scholarship)}
+                      className="btn-download"
+                    >
+                      📥 Download PDF
+                    </button>
+                    <button
+                      onClick={() => {
+                        navigate('/form-fill-request', {
+                          state: { scholarshipId: scholarship.id, scholarshipTitle: scholarship.title }
+                        });
+                      }}
+                      className="btn-request"
+                    >
+                      📋 Request Form Fill
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div className="actions-row">
+            <button onClick={() => setSubmitted(false)} className="btn-secondary">
+              Update Profile
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <>
-      <div id="woman-container">
-        {HandleForm && (
-          <form id="woman-form" onSubmit={handleSubmit}>
-            <h2 className="form-title">Women Benefits Form</h2>
+    <div className="merit-container">
+      <div className="merit-form-wrapper">
+        <h1 className="page-title">Women's Scholarship & Benefits Eligibility</h1>
+        <p className="page-description">
+          Fill in your details to find women-specific scholarships and benefits you're eligible for
+        </p>
+
+        <form onSubmit={handleSubmit} className="merit-form">
+          <div className="form-section">
+            <h2 className="section-title">Personal Information</h2>
+            <div className="form-grid">
+              <div className="form-group">
+                <label>Full Name <span className="required">*</span></label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                  placeholder="Enter your full name"
+                />
+              </div>
 
             <div className="form-group">
-              <label htmlFor="w-name">Name</label>
-              <input id="w-name" type="text" value={Wname} onChange={(e) => setWname(e.target.value)} placeholder="Enter your name" />
+                <label>Email <span className="required">*</span></label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  placeholder="Enter your email"
+                />
             </div>
 
             <div className="form-group">
-              <label htmlFor="w-num">Mobile Number</label>
-              <input id="w-num" type="tel" value={Wnum} onChange={(e) => setWnum(e.target.value)} placeholder="Enter your mobile number" />
+                <label>Phone Number <span className="required">*</span></label>
+                <input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  required
+                  placeholder="Enter your phone number"
+                />
             </div>
 
             <div className="form-group">
-              <label htmlFor="w-mail">Email</label>
-              <input id="w-mail" type="email" value={Wmail} onChange={(e) => setWmail(e.target.value)} placeholder="Enter your email" />
+                <label>Age <span className="required">*</span></label>
+                <input
+                  type="number"
+                  name="age"
+                  value={formData.age}
+                  onChange={handleChange}
+                  required
+                  min="1"
+                  max="100"
+                  placeholder="Enter your age"
+                />
             </div>
 
             <div className="form-group">
-              <label htmlFor="w-age">Age</label>
-              <input id="w-age" type="number" value={Wage} onChange={(e) => setWage(e.target.value)} placeholder="Enter age" />
+                <label>Aadhaar Number</label>
+                <input
+                  type="text"
+                  name="aadhaar"
+                  value={formData.aadhaar}
+                  onChange={handleChange}
+                  placeholder="Enter Aadhaar number (12 digits)"
+                  maxLength="12"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="form-section">
+            <h2 className="section-title">Location Information</h2>
+            <div className="form-grid">
+              <div className="form-group">
+                <label>State <span className="required">*</span></label>
+                <input
+                  type="text"
+                  name="state"
+                  value={formData.state}
+                  onChange={handleChange}
+                  required
+                  placeholder="Enter your state"
+                />
             </div>
 
             <div className="form-group">
-              <label htmlFor="w-income">Annual Income (₹)</label>
-              <input id="w-income" type="number" value={Wincome} onChange={(e) => setWincome(e.target.value)} placeholder="Enter income" />
+                <label>District</label>
+                <input
+                  type="text"
+                  name="district"
+                  value={formData.district}
+                  onChange={handleChange}
+                  placeholder="Enter your district"
+                />
             </div>
 
-            <div className="form-radio">
-              <h4>Are you a widow?</h4>
-              <input type="radio" id="widow-yes" name="widow" value="yes" onChange={(e) => setIsWidow(e.target.value)} /> <label htmlFor="widow-yes">Yes</label>
-              <input type="radio" id="widow-no" name="widow" value="no" onChange={(e) => setIsWidow(e.target.value)} /> <label htmlFor="widow-no">No</label>
+              <div className="form-group">
+                <label>City</label>
+                <input
+                  type="text"
+                  name="city"
+                  value={formData.city}
+                  onChange={handleChange}
+                  placeholder="Enter your city"
+                />
+              </div>
 
-              <h4>Are you pregnant?</h4>
-              <input type="radio" id="preg-yes" name="pregnant" value="yes" onChange={(e) => setIsPregnant(e.target.value)} /> <label htmlFor="preg-yes">Yes</label>
-              <input type="radio" id="preg-no" name="pregnant" value="no" onChange={(e) => setIsPregnant(e.target.value)} /> <label htmlFor="preg-no">No</label>
+              <div className="form-group">
+                <label>Pincode</label>
+                <input
+                  type="text"
+                  name="pincode"
+                  value={formData.pincode}
+                  onChange={handleChange}
+                  placeholder="Enter pincode"
+                />
+              </div>
+            </div>
+          </div>
 
-              <h4>Are you a student?</h4>
-              <input type="radio" id="stud-yes" name="student" value="yes" onChange={(e) => setIsStudent(e.target.value)} /> <label htmlFor="stud-yes">Yes</label>
-              <input type="radio" id="stud-no" name="student" value="no" onChange={(e) => setIsStudent(e.target.value)} /> <label htmlFor="stud-no">No</label>
+          <div className="form-section">
+            <h2 className="section-title">Financial Information</h2>
+            <div className="form-grid">
+              <div className="form-group">
+                <label>Annual Family Income (Rs.)</label>
+                <input
+                  type="number"
+                  name="annualIncome"
+                  value={formData.annualIncome}
+                  onChange={handleChange}
+                  min="0"
+                  placeholder="Enter annual family income (optional)"
+                />
+                <small style={{ color: '#666', fontSize: '0.85rem', marginTop: '5px' }}>
+                  Required for some schemes like Widow Pension, Beti Bachao Beti Padhao
+                </small>
+              </div>
+            </div>
+          </div>
 
-              <h4>Do you have a bank account?</h4>
-              <input type="radio" id="bank-yes" name="bank" value="yes" onChange={(e) => setHasBank(e.target.value)} /> <label htmlFor="bank-yes">Yes</label>
-              <input type="radio" id="bank-no" name="bank" value="no" onChange={(e) => setHasBank(e.target.value)} /> <label htmlFor="bank-no">No</label>
+          <div className="form-section">
+            <h2 className="section-title">Women-Specific Information</h2>
+            <div className="form-grid">
+              <div className="form-group">
+                <label>Are you currently pregnant?</label>
+                <select
+                  name="isPregnant"
+                  value={formData.isPregnant}
+                  onChange={handleChange}
+                >
+                  <option value="">Select</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+                <small style={{ color: '#666', fontSize: '0.85rem', marginTop: '5px' }}>
+                  Required for PMMVY and Janani Suraksha Yojana
+                </small>
+              </div>
 
-              <h4>Are you working/self-employed?</h4>
-              <input type="radio" id="work-yes" name="working" value="yes" onChange={(e) => setIsWorking(e.target.value)} /> <label htmlFor="work-yes">Yes</label>
-              <input type="radio" id="work-no" name="working" value="no" onChange={(e) => setIsWorking(e.target.value)} /> <label htmlFor="work-no">No</label>
+              <div className="form-group">
+                <label>Are you a widow?</label>
+                <select
+                  name="isWidow"
+                  value={formData.isWidow}
+                  onChange={handleChange}
+                >
+                  <option value="">Select</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+                <small style={{ color: '#666', fontSize: '0.85rem', marginTop: '5px' }}>
+                  Required for Widow Pension Scheme
+                </small>
             </div>
 
-            <button id="submit-btn" type="submit">Submit</button>
-          </form>
-        )}
+              <div className="form-group">
+                <label>Are you a student?</label>
+                <select
+                  name="isStudent"
+                  value={formData.isStudent}
+                  onChange={handleChange}
+                >
+                  <option value="">Select</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+                <small style={{ color: '#666', fontSize: '0.85rem', marginTop: '5px' }}>
+                  Required for Beti Bachao Beti Padhao and AICTE Pragati
+                </small>
       </div>
 
-      {/* Benefits */}
-      <div id="benefits-container">
-        {HandleB1 && (
-          <div className="benefit-card" id="benefit-1">
-            <h1>1. Pradhan Mantri Matru Vandana Yojana (PMMVY)</h1>
-            <a href="https://wcd.nic.in/schemes/pradhan-mantri-matru-vandana-yojana">Official Link</a>
-            <p>₹5,000 for pregnant and lactating women for the first child.</p>
+              <div className="form-group">
+                <label>Are you working or self-employed?</label>
+                <select
+                  name="isWorking"
+                  value={formData.isWorking}
+                  onChange={handleChange}
+                >
+                  <option value="">Select</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+                <small style={{ color: '#666', fontSize: '0.85rem', marginTop: '5px' }}>
+                  Required for Stand-Up India Scheme
+                </small>
           </div>
-        )}
 
-        {HandleB2 && (
-          <div className="benefit-card" id="benefit-2">
-            <h1>2. Widow Pension Scheme</h1>
-            <a href="https://nsap.nic.in/">Official Link</a>
-            <p>Monthly pension support for widows under poverty line.</p>
+              <div className="form-group">
+                <label>Do you have a bank account?</label>
+                <select
+                  name="hasBankAccount"
+                  value={formData.hasBankAccount}
+                  onChange={handleChange}
+                >
+                  <option value="">Select</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
           </div>
-        )}
 
-        {HandleB3 && (
-          <div className="benefit-card" id="benefit-3">
-            <h1>3. Beti Bachao Beti Padhao</h1>
-            <a href="https://wcd.nic.in/bbbp-schemes">Official Link</a>
-            <p>Scholarships and education support for girl children.</p>
+              <div className="form-group">
+                <label>12th Marks (%) - Only if you are a student</label>
+                <input
+                  type="number"
+                  name="marks12"
+                  value={formData.marks12}
+                  onChange={handleChange}
+                  min="0"
+                  max="100"
+                  step="0.01"
+                  placeholder="Enter 12th percentage (for AICTE Pragati)"
+                />
+                <small style={{ color: '#666', fontSize: '0.85rem', marginTop: '5px' }}>
+                  Only required for AICTE Pragati Scholarship
+                </small>
+              </div>
+            </div>
           </div>
-        )}
 
-        {HandleB4 && (
-          <div className="benefit-card" id="benefit-4">
-            <h1>4. Stand-Up India Scheme</h1>
-            <a href="https://www.standupmitra.in/">Official Link</a>
-            <p>Loans between ₹10 lakh – ₹1 crore for women entrepreneurs.</p>
+          <div className="form-section">
+            <h2 className="section-title">Bank Details (Optional)</h2>
+            <div className="form-grid">
+              <div className="form-group">
+                <label>Bank Account Number</label>
+                <input
+                  type="text"
+                  name="bankAccount"
+                  value={formData.bankAccount}
+                  onChange={handleChange}
+                  placeholder="Enter bank account number"
+                />
           </div>
-        )}
 
-        {HandleB5 && (
-          <div className="benefit-card" id="benefit-5">
-            <h1>5. Janani Suraksha Yojana (JSY)</h1>
-            <a href="https://nhm.gov.in/index1.php?lang=1&level=3&sublinkid=841&lid=309">Official Link</a>
-            <p>Cash incentive to promote institutional deliveries.</p>
+              <div className="form-group">
+                <label>IFSC Code</label>
+                <input
+                  type="text"
+                  name="ifscCode"
+                  value={formData.ifscCode}
+                  onChange={handleChange}
+                  placeholder="Enter IFSC code"
+                  style={{ textTransform: 'uppercase' }}
+                />
+              </div>
+            </div>
           </div>
-        )}
 
-        {HandleNo && (
-          <div className="benefit-card no-benefit">
-            <h1>Sorry, you are not eligible for any benefits</h1>
-            <img src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-616.jpg" alt="no benefits" />
+          <div className="form-actions">
+            <button type="submit" className="btn-primary" disabled={loading}>
+              {loading ? 'Checking Eligibility...' : 'Check Eligibility'}
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate('/')}
+              className="btn-secondary"
+            >
+              Cancel
+            </button>
           </div>
-        )}
+        </form>
+          </div>
       </div>
-    </>
   );
 };
 
