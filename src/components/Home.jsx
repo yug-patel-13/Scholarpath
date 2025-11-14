@@ -8,11 +8,11 @@ import './Home.css';
 const Home = ({ username }) => {
   const [chat, setChat] = useState(false);
   const [categories, setCategories] = useState([
-    { id: 1, name: 'Farmer', imageUrl: '/farmer.jpg', description: 'Find farmer-specific scholarships and benefits' },
-    { id: 2, name: 'SC/ST/OBC', imageUrl: '/sc.jpg', description: 'Scholarships for SC, ST, and OBC categories' },
-    { id: 3, name: 'Women', imageUrl: '/woman.jpg', description: 'Exclusive scholarships for women' },
-    { id: 4, name: 'EWS', imageUrl: '/ews.jpg', description: 'Economically Weaker Section scholarships' },
-    { id: 5, name: 'Merit Based', imageUrl: '/merit.webp', description: 'Merit-based scholarships for all students' },
+    { id: 1, name: 'Farmer', imageUrl: 'https://images.unsplash.com/photo-1560493676-04071c5f467b?w=800&h=600&fit=crop', description: 'Find farmer-specific scholarships and benefits' },
+    { id: 2, name: 'SC/ST/OBC', imageUrl: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&h=600&fit=crop', description: 'Scholarships for SC, ST, and OBC categories' },
+    { id: 3, name: 'Women', imageUrl: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=600&fit=crop', description: 'Exclusive scholarships for women' },
+    { id: 4, name: 'EWS', imageUrl: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&h=600&fit=crop', description: 'Economically Weaker Section scholarships' },
+    { id: 5, name: 'Merit Based', imageUrl: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=600&fit=crop', description: 'Merit-based scholarships & CMSS (Chief Minister Scholarship Scheme) for all students' },
   ]);
   const { isAuthenticated } = useAuth();
 
@@ -42,13 +42,13 @@ const Home = ({ username }) => {
 
   const getDefaultImage = (name) => {
     const images = {
-      'Farmer': '/farmer.jpg',
-      'SC/ST/OBC': '/sc.jpg',
-      'Women': '/woman.jpg',
-      'EWS': '/ews.jpg',
-      'Merit Based': '/merit.webp',
+      'Farmer': 'https://images.unsplash.com/photo-1560493676-04071c5f467b?w=800&h=600&fit=crop',
+      'SC/ST/OBC': 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&h=600&fit=crop',
+      'Women': 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=600&fit=crop',
+      'EWS': 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&h=600&fit=crop',
+      'Merit Based': 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=600&fit=crop',
     };
-    return images[name] || '/farmer.jpg';
+    return images[name] || 'https://images.unsplash.com/photo-1560493676-04071c5f467b?w=800&h=600&fit=crop';
   };
 
   const getDefaultDescription = (name) => {
@@ -57,7 +57,7 @@ const Home = ({ username }) => {
       'SC/ST/OBC': 'Scholarships for SC, ST, and OBC categories',
       'Women': 'Exclusive scholarships for women',
       'EWS': 'Economically Weaker Section scholarships',
-      'Merit Based': 'Merit-based scholarships for all students',
+      'Merit Based': 'Merit-based scholarships & CMSS (Chief Minister Scholarship Scheme) for all students',
     };
     return descriptions[name] || `Find ${name} scholarships`;
   };
@@ -183,11 +183,20 @@ const Home = ({ username }) => {
                     <Link to={categoryPath} className="category-link">
                       <div className="category-image-wrapper">
                         <img
-                          src={category.imageUrl || `/farmer.jpg`}
+                          src={category.imageUrl || getDefaultImage(categoryName)}
                           alt={categoryName}
                           className="category-image"
+                          style={{
+                            objectFit: 'cover',
+                            objectPosition: categoryName === 'Farmer' ? 'center 30%' : 'center center',
+                            transform: 'scale(1) rotate(0deg)',
+                          }}
                           onError={(e) => {
                             e.target.src = 'https://via.placeholder.com/300x200/667eea/ffffff?text=' + categoryName;
+                          }}
+                          onLoad={(e) => {
+                            // Ensure image is not rotated incorrectly
+                            e.target.style.transform = 'scale(1) rotate(0deg)';
                           }}
                         />
                         <div className="category-overlay">
@@ -205,11 +214,20 @@ const Home = ({ username }) => {
                     <>
                       <div className="category-image-wrapper">
                         <img
-                          src={category.imageUrl || `/farmer.jpg`}
+                          src={category.imageUrl || getDefaultImage(categoryName)}
                           alt={categoryName}
                           className="category-image"
+                          style={{
+                            objectFit: 'cover',
+                            objectPosition: categoryName === 'Farmer' ? 'center 30%' : 'center center',
+                            transform: 'scale(1) rotate(0deg)',
+                          }}
                           onError={(e) => {
                             e.target.src = 'https://via.placeholder.com/300x200/667eea/ffffff?text=' + categoryName;
+                          }}
+                          onLoad={(e) => {
+                            // Ensure image is not rotated incorrectly
+                            e.target.style.transform = 'scale(1) rotate(0deg)';
                           }}
                         />
                         <div className="category-overlay locked">

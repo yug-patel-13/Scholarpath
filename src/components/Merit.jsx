@@ -29,6 +29,14 @@ const Merit = () => {
     aadhaar: '',
     bankAccount: '',
     ifscCode: '',
+    // CMSS Special Categories
+    lowLiteracyTaluka: false,
+    childrenOfMartyrs: false,
+    shramikCard: false,
+    disabilityCertificate: false,
+    widowCertificate: false,
+    orphanCertificate: false,
+    tyaktaCertificate: false,
   });
 
   const [scholarships, setScholarships] = useState([]);
@@ -70,6 +78,14 @@ const Merit = () => {
           aadhaar: response.data.aadhaar || '',
           bankAccount: '',
           ifscCode: '',
+          // CMSS Special Categories
+          lowLiteracyTaluka: response.data.lowLiteracyTaluka || false,
+          childrenOfMartyrs: response.data.childrenOfMartyrs || false,
+          shramikCard: response.data.shramikCard || false,
+          disabilityCertificate: response.data.disabilityCertificate || false,
+          widowCertificate: response.data.widowCertificate || false,
+          orphanCertificate: response.data.orphanCertificate || false,
+          tyaktaCertificate: response.data.tyaktaCertificate || false,
         });
       }
     } catch (error) {
@@ -78,8 +94,11 @@ const Merit = () => {
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -104,6 +123,14 @@ const Merit = () => {
         marks10: parseFloat(formData.marks10),
         marks12: parseFloat(formData.marks12),
         aadhaar: formData.aadhaar,
+        // CMSS Special Categories
+        lowLiteracyTaluka: formData.lowLiteracyTaluka || false,
+        childrenOfMartyrs: formData.childrenOfMartyrs || false,
+        shramikCard: formData.shramikCard || false,
+        disabilityCertificate: formData.disabilityCertificate || false,
+        widowCertificate: formData.widowCertificate || false,
+        orphanCertificate: formData.orphanCertificate || false,
+        tyaktaCertificate: formData.tyaktaCertificate || false,
       };
 
       await userProfileAPI.createProfile(profileData);
@@ -285,9 +312,9 @@ const Merit = () => {
   return (
     <div className="merit-container">
       <div className="merit-form-wrapper">
-        <h1 className="page-title">Merit-Based Scholarship Eligibility</h1>
+        <h1 className="page-title">Merit-Based & CMSS Scholarship Eligibility</h1>
         <p className="page-description">
-          Fill in your details to find merit-based scholarships you're eligible for
+          Fill in your details to find merit-based scholarships and CMSS (Chief Minister Scholarship Scheme) you're eligible for
         </p>
 
         <form onSubmit={handleSubmit} className="merit-form">
@@ -515,6 +542,106 @@ const Merit = () => {
                   onChange={handleChange}
                   placeholder="Enter college name"
                 />
+              </div>
+            </div>
+          </div>
+
+          {/* CMSS Special Categories */}
+          <div className="form-section">
+            <h2 className="section-title">CMSS Special Categories (Optional)</h2>
+            <p className="section-description" style={{ marginBottom: '20px', color: '#666', fontSize: '0.9rem' }}>
+              Chief Minister Scholarship Scheme (CMSS) has 7 special categories. Select if you belong to any of these:
+            </p>
+            <div className="form-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
+              <div className="form-group" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <input
+                  type="checkbox"
+                  name="lowLiteracyTaluka"
+                  checked={formData.lowLiteracyTaluka}
+                  onChange={handleChange}
+                  id="lowLiteracyTaluka"
+                />
+                <label htmlFor="lowLiteracyTaluka" style={{ margin: 0, cursor: 'pointer' }}>
+                  List of Taluka Having below 50% Literacy Rate (૫૦% થી ઓછો સાક્ષરતા દર)
+                </label>
+              </div>
+
+              <div className="form-group" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <input
+                  type="checkbox"
+                  name="childrenOfMartyrs"
+                  checked={formData.childrenOfMartyrs}
+                  onChange={handleChange}
+                  id="childrenOfMartyrs"
+                />
+                <label htmlFor="childrenOfMartyrs" style={{ margin: 0, cursor: 'pointer' }}>
+                  Children of Martyrs (શહીદ જવાન અંગેનું પ્રમાણપત્ર)
+                </label>
+              </div>
+
+              <div className="form-group" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <input
+                  type="checkbox"
+                  name="shramikCard"
+                  checked={formData.shramikCard}
+                  onChange={handleChange}
+                  id="shramikCard"
+                />
+                <label htmlFor="shramikCard" style={{ margin: 0, cursor: 'pointer' }}>
+                  Shramik Card (માન્ય શ્રમિક કાર્ડની વિગત)
+                </label>
+              </div>
+
+              <div className="form-group" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <input
+                  type="checkbox"
+                  name="disabilityCertificate"
+                  checked={formData.disabilityCertificate}
+                  onChange={handleChange}
+                  id="disabilityCertificate"
+                />
+                <label htmlFor="disabilityCertificate" style={{ margin: 0, cursor: 'pointer' }}>
+                  Disability Certificate (વિકલાંગતા પ્રમાણપત્ર)
+                </label>
+              </div>
+
+              <div className="form-group" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <input
+                  type="checkbox"
+                  name="widowCertificate"
+                  checked={formData.widowCertificate}
+                  onChange={handleChange}
+                  id="widowCertificate"
+                />
+                <label htmlFor="widowCertificate" style={{ margin: 0, cursor: 'pointer' }}>
+                  Widow Certificate (વિધવા પ્રમાણપત્ર)
+                </label>
+              </div>
+
+              <div className="form-group" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <input
+                  type="checkbox"
+                  name="orphanCertificate"
+                  checked={formData.orphanCertificate}
+                  onChange={handleChange}
+                  id="orphanCertificate"
+                />
+                <label htmlFor="orphanCertificate" style={{ margin: 0, cursor: 'pointer' }}>
+                  Orphan Certificate (અનાથ અંગેનું પ્રમાણપત્ર)
+                </label>
+              </div>
+
+              <div className="form-group" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <input
+                  type="checkbox"
+                  name="tyaktaCertificate"
+                  checked={formData.tyaktaCertificate}
+                  onChange={handleChange}
+                  id="tyaktaCertificate"
+                />
+                <label htmlFor="tyaktaCertificate" style={{ margin: 0, cursor: 'pointer' }}>
+                  Tyakta Certificate (ત્યકતા અંગેનું પ્રમાણપત્ર)
+                </label>
               </div>
             </div>
           </div>

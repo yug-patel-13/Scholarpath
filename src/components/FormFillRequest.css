@@ -12,6 +12,27 @@
   font-size: 2.5rem;
 }
 
+.highlight-text {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+  font-size: 2.8rem;
+  display: inline-block;
+  text-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    filter: drop-shadow(0 0 5px rgba(102, 126, 234, 0.5));
+  }
+  to {
+    filter: drop-shadow(0 0 15px rgba(102, 126, 234, 0.8));
+  }
+}
+
 .page-description {
   text-align: center;
   color: #666;
@@ -67,6 +88,27 @@
 
 .required {
   color: #dc3545;
+}
+
+.help-text {
+  font-size: 0.85rem;
+  color: #666;
+  font-weight: normal;
+  margin-left: 5px;
+}
+
+.field-hint {
+  display: block;
+  margin-top: 5px;
+  font-size: 0.85rem;
+  color: #666;
+  font-style: italic;
+}
+
+.success-hint {
+  color: #059669 !important;
+  font-weight: 600;
+  font-style: normal;
 }
 
 .form-group input,
@@ -182,6 +224,10 @@
     font-size: 2rem;
   }
 
+  .highlight-text {
+    font-size: 2.2rem;
+  }
+
   .request-types-info {
     grid-template-columns: 1fr;
   }
@@ -199,4 +245,18 @@
     width: 100%;
   }
 }
+
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 1.6rem;
+  }
+
+  .highlight-text {
+    font-size: 1.8rem;
+    display: block;
+    margin-bottom: 10px;
+  }
+}
+
+
 

@@ -94,6 +94,17 @@ const Main = ({ username }) => {
             <span>Contact</span>
           </Link>
           
+          {user && (
+            <Link 
+              to="/form-fill-request" 
+              className={`nav-link form-help-link ${Active === "form-fill-request" ? "active" : ""}`}
+              onClick={() => handleAct('form-fill-request')}
+            >
+              <span className="form-help-text">📋 Form Help</span>
+              <span className="form-help-badge">NEW</span>
+            </Link>
+          )}
+
           <Link 
             to="/faq" 
             className={`nav-link ${Active === "faq" ? "active" : ""}`}
@@ -101,16 +112,6 @@ const Main = ({ username }) => {
           >
             <span>FAQ</span>
           </Link>
-
-          {user && (
-            <Link 
-              to="/form-fill-request" 
-              className={`nav-link ${Active === "form-fill-request" ? "active" : ""}`}
-              onClick={() => handleAct('form-fill-request')}
-            >
-              <span>Form Help</span>
-            </Link>
-          )}
 
           {isAdmin && (
             <Link 
@@ -216,10 +217,11 @@ const Main = ({ username }) => {
         {user && (
           <Link 
             to="/form-fill-request" 
-            className={`mobile-nav-link ${Active === "form-fill-request" ? "active" : ""}`}
+            className={`mobile-nav-link form-help-link ${Active === "form-fill-request" ? "active" : ""}`}
             onClick={() => handleAct('form-fill-request')}
           >
-            <span>Form Help</span>
+            <span className="form-help-text">📋 Form Help</span>
+            <span className="form-help-badge">NEW</span>
           </Link>
         )}
 

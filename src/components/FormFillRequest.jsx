@@ -11,6 +11,7 @@ const FormFillRequest = () => {
   const [formData, setFormData] = useState({
     requestType: 'online',
     scholarshipId: '',
+    formName: '',
     description: '',
     contactPhone: '',
     contactEmail: '',
@@ -36,6 +37,7 @@ const FormFillRequest = () => {
       setFormData(prev => ({
         ...prev,
         scholarshipId: locationState.scholarshipId.toString(),
+        formName: locationState.scholarshipTitle || '',
         description: locationState.scholarshipTitle 
           ? `I need help filling the form for: ${locationState.scholarshipTitle}`
           : prev.description
@@ -54,6 +56,31 @@ const FormFillRequest = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    
+    // Auto-fill formName when scholarship is selected
+    if (name === 'scholarshipId') {
+      if (value) {
+        const selectedScholarship = scholarships.find(sch => sch.id.toString() === value);
+        if (selectedScholarship) {
+          setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+            formName: selectedScholarship.title,
+            description: prev.description || `I need help filling the form for: ${selectedScholarship.title}`
+          }));
+          return;
+        }
+      } else {
+        // If scholarship is cleared, clear formName if it was auto-filled
+        setFormData((prev) => ({
+          ...prev,
+          [name]: value,
+          formName: prev.formName && scholarships.find(sch => sch.title === prev.formName) ? '' : prev.formName
+        }));
+        return;
+      }
+    }
+    
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -67,17 +94,65 @@ const FormFillRequest = () => {
 
     setLoading(true);
     try {
-      await formFillRequestAPI.create({
+      // Validate formName - required only if no scholarship is selected
+      if (!formData.scholarshipId && (!formData.formName || formData.formName.trim() === '')) {
+        alert('Please enter a form name or select a benefit/scholarship from the list.');
+        setLoading(false);
+        return;
+      }
+
+      // Ensure description is always provided and valid
+      let description = (formData.description || '').trim();
+      if (!description || description.length < 10) {
+        if (formData.formName) {
+          description = `I need help filling the form for: ${formData.formName}. Please assist me with the complete process.`;
+        } else {
+          alert('Please provide a description of the help you need (at least 10 characters).');
+          setLoading(false);
+          return;
+        }
+      }
+
+      // Ensure formName is set
+      let formName = formData.formName?.trim() || '';
+      if (!formName && formData.scholarshipId) {
+        const selectedScholarship = scholarships.find(sch => sch.id.toString() === formData.scholarshipId);
+        formName = selectedScholarship?.title || '';
+      }
+
+      const requestData = {
         userId: user.id,
-        ...formData,
-        contactPhone: formData.contactPhone || user.phone,
-        contactEmail: formData.contactEmail || user.email,
-      });
+        requestType: formData.requestType,
+        description: description,
+        contactPhone: formData.contactPhone || user.phone || '',
+        contactEmail: formData.contactEmail || user.email || '',
+        address: formData.address || '',
+        pincode: formData.pincode || '',
+        preferredTime: formData.preferredTime || '',
+      };
+
+      // Only include preferredDate if it's provided and not empty
+      if (formData.preferredDate && formData.preferredDate.trim() !== '') {
+        requestData.preferredDate = formData.preferredDate;
+      }
+
+      // Only include scholarshipId if it's selected and convert to number
+      if (formData.scholarshipId && formData.scholarshipId !== '') {
+        requestData.scholarshipId = parseInt(formData.scholarshipId, 10);
+      }
+
+      // Include formName
+      if (formName) {
+        requestData.formName = formName;
+      }
+
+      await formFillRequestAPI.create(requestData);
       setSubmitted(true);
       alert('Request submitted successfully! We will contact you soon.');
     } catch (error) {
       console.error('Error submitting request:', error);
-      alert('Error submitting request. Please try again.');
+      const errorMessage = error.response?.data?.message || error.message || 'Error submitting request. Please try again.';
+      alert(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -103,10 +178,12 @@ const FormFillRequest = () => {
 
   return (
     <div className="form-fill-request-container">
-      <h1 className="page-title">Form Fill Request</h1>
+      <h1 className="page-title">
+        <span className="highlight-text">Book Form Fill Helper</span> - Request Service
+      </h1>
       <p className="page-description">
-        Need help filling out scholarship forms? Request our assistance and we'll help you complete
-        the process.
+        Need help filling out <strong>benefits or other forms</strong>? Request our assistance and we'll help you complete
+        the process. Whether it's JEE Main, scholarship forms, farmer benefits, or any other government form - we're here to help!
       </p>
 
       <div className="request-types-info">
@@ -152,29 +229,52 @@ const FormFillRequest = () => {
         </div>
 
         <div className="form-group">
-          <label>Scholarship (Optional)</label>
+          <label>Benefits or Other Form Help</label>
           <select name="scholarshipId" value={formData.scholarshipId} onChange={handleChange}>
-            <option value="">Select a scholarship</option>
+            <option value="">Select a benefit/scholarship (optional)</option>
             {scholarships.map((sch) => (
               <option key={sch.id} value={sch.id}>
                 {sch.title}
               </option>
             ))}
           </select>
+          <small className="field-hint">Select a benefit/scholarship to auto-fill the form name</small>
         </div>
 
         <div className="form-group">
           <label>
-            Description <span className="required">*</span>
+            Form Name {!formData.scholarshipId && <span className="required">*</span>}
+            <span className="help-text">(e.g., JEE Main form, PM Kisan form, Scholarship form, etc.)</span>
+          </label>
+          <input
+            type="text"
+            name="formName"
+            value={formData.formName}
+            onChange={handleChange}
+            placeholder={formData.scholarshipId ? "Form name auto-filled from selection (you can edit)" : "Enter form name (e.g., JEE Main form, PM Kisan form)"}
+            required={!formData.scholarshipId}
+          />
+          {formData.scholarshipId && (
+            <small className="field-hint success-hint">
+              ✓ Form name auto-filled from selected benefit. You can edit if needed.
+            </small>
+          )}
+        </div>
+
+        <div className="form-group">
+          <label>
+            Additional Description <span className="required">*</span>
           </label>
           <textarea
             name="description"
             value={formData.description}
             onChange={handleChange}
             rows={5}
-            placeholder="Describe what help you need..."
+            placeholder="Describe what help you need... (e.g., I need help filling JEE Main form, or I need assistance with PM Kisan application)"
             required
+            minLength={10}
           />
+          <small className="field-hint">Please provide at least a brief description of the help you need</small>
         </div>
 
         <div className="form-row">
