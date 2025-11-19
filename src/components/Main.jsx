@@ -10,7 +10,7 @@ const Main = ({ username }) => {
   const { user, logout, isAdmin } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const [i18n] = useTranslation("global");
+  const { t, i18n } = useTranslation("global");
 
   // Update active link based on current location
   React.useEffect(() => {
@@ -26,6 +26,7 @@ const Main = ({ username }) => {
 
   const handlang = (lang) => {
     i18n.changeLanguage(lang);
+    localStorage.setItem('i18nextLng', lang);
   };
 
   const handleAct = (Linkname) => {
@@ -60,10 +61,10 @@ const Main = ({ username }) => {
             name="language" 
             className="language-select" 
             onChange={(e) => handlang(e.target.value)}
-            defaultValue="en"
+            value={i18n.language || 'en'}
           >
             <option value="en">EN</option>
-            <option value="guj">GU</option>
+            <option value="guj">ગુજ</option>
             <option value="hn">HI</option>
           </select>
         </div>
@@ -75,7 +76,7 @@ const Main = ({ username }) => {
             className={`nav-link ${Active === "home" ? "active" : ""}`}
             onClick={() => handleAct('home')}
           >
-            <span>Home</span>
+            <span>{t('nav.home')}</span>
           </Link>
           
           <Link 
@@ -83,7 +84,7 @@ const Main = ({ username }) => {
             className={`nav-link ${Active === "about" ? "active" : ""}`}
             onClick={() => handleAct('about')}
           >
-            <span>About</span>
+            <span>{t('nav.about')}</span>
           </Link>
           
           <Link 
@@ -91,7 +92,7 @@ const Main = ({ username }) => {
             className={`nav-link ${Active === "contact" ? "active" : ""}`}
             onClick={() => handleAct('contact')}
           >
-            <span>Contact</span>
+            <span>{t('nav.contact')}</span>
           </Link>
           
           {user && (
@@ -100,8 +101,8 @@ const Main = ({ username }) => {
               className={`nav-link form-help-link ${Active === "form-fill-request" ? "active" : ""}`}
               onClick={() => handleAct('form-fill-request')}
             >
-              <span className="form-help-text">📋 Form Help</span>
-              <span className="form-help-badge">NEW</span>
+              <span className="form-help-text">📋 {t('nav.formHelp')}</span>
+              <span className="form-help-badge">{t('nav.new')}</span>
             </Link>
           )}
 
@@ -110,7 +111,7 @@ const Main = ({ username }) => {
             className={`nav-link ${Active === "faq" ? "active" : ""}`}
             onClick={() => handleAct('faq')}
           >
-            <span>FAQ</span>
+            <span>{t('nav.faq')}</span>
           </Link>
 
           {isAdmin && (
@@ -119,7 +120,7 @@ const Main = ({ username }) => {
               className={`nav-link admin-link ${Active === "admin" ? "active" : ""}`}
               onClick={() => handleAct('admin')}
             >
-              <span>Admin</span>
+              <span>{t('nav.admin')}</span>
             </Link>
           )}
 
@@ -139,14 +140,14 @@ const Main = ({ username }) => {
                 <button 
                   className="logout-btn" 
                   onClick={handleLogout}
-                  title="Logout"
+                  title={t('nav.logout')}
                 >
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                     <polyline points="16 17 21 12 16 7"></polyline>
                     <line x1="21" y1="12" x2="9" y2="12"></line>
                   </svg>
-                  <span>Logout</span>
+                  <span>{t('nav.logout')}</span>
                 </button>
               </div>
             ) : (
@@ -160,7 +161,7 @@ const Main = ({ username }) => {
                   <polyline points="10 17 15 12 10 7"></polyline>
                   <line x1="15" y1="12" x2="3" y2="12"></line>
                 </svg>
-                <span>Login</span>
+                <span>{t('nav.login')}</span>
               </Link>
             )}
           </div>
@@ -187,7 +188,7 @@ const Main = ({ username }) => {
           className={`mobile-nav-link ${Active === "home" ? "active" : ""}`}
           onClick={() => handleAct('home')}
         >
-          <span>Home</span>
+          <span>{t('nav.home')}</span>
         </Link>
         
         <Link 
@@ -195,7 +196,7 @@ const Main = ({ username }) => {
           className={`mobile-nav-link ${Active === "about" ? "active" : ""}`}
           onClick={() => handleAct('about')}
         >
-          <span>About</span>
+          <span>{t('nav.about')}</span>
         </Link>
         
         <Link 
@@ -203,7 +204,7 @@ const Main = ({ username }) => {
           className={`mobile-nav-link ${Active === "contact" ? "active" : ""}`}
           onClick={() => handleAct('contact')}
         >
-          <span>Contact</span>
+          <span>{t('nav.contact')}</span>
         </Link>
         
         <Link 
@@ -211,7 +212,7 @@ const Main = ({ username }) => {
           className={`mobile-nav-link ${Active === "faq" ? "active" : ""}`}
           onClick={() => handleAct('faq')}
         >
-          <span>FAQ</span>
+          <span>{t('nav.faq')}</span>
         </Link>
 
         {user && (
@@ -220,8 +221,8 @@ const Main = ({ username }) => {
             className={`mobile-nav-link form-help-link ${Active === "form-fill-request" ? "active" : ""}`}
             onClick={() => handleAct('form-fill-request')}
           >
-            <span className="form-help-text">📋 Form Help</span>
-            <span className="form-help-badge">NEW</span>
+            <span className="form-help-text">📋 {t('nav.formHelp')}</span>
+            <span className="form-help-badge">{t('nav.new')}</span>
           </Link>
         )}
 
@@ -231,7 +232,7 @@ const Main = ({ username }) => {
             className={`mobile-nav-link admin-link ${Active === "admin" ? "active" : ""}`}
             onClick={() => handleAct('admin')}
           >
-            <span>Admin</span>
+            <span>{t('nav.admin')}</span>
           </Link>
         )}
 
@@ -256,7 +257,7 @@ const Main = ({ username }) => {
                   <polyline points="16 17 21 12 16 7"></polyline>
                   <line x1="21" y1="12" x2="9" y2="12"></line>
                 </svg>
-                <span>Logout</span>
+                <span>{t('nav.logout')}</span>
               </button>
             </>
           ) : (
@@ -270,7 +271,7 @@ const Main = ({ username }) => {
                 <polyline points="10 17 15 12 10 7"></polyline>
                 <line x1="15" y1="12" x2="3" y2="12"></line>
               </svg>
-              <span>Login</span>
+              <span>{t('nav.login')}</span>
             </Link>
           )}
         </div>

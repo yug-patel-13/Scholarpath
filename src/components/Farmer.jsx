@@ -3,9 +3,11 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { userAPI as userProfileAPI, scholarshipAPI } from '../services/api';
 import { jsPDF } from 'jspdf';
-import './Merit.css';
+import { useTranslation } from 'react-i18next';
+import './Farmer.css';
 
 const Farmer = () => {
+  const { t } = useTranslation('global');
   const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -192,17 +194,16 @@ const Farmer = () => {
     return (
       <div className="merit-container">
         <div className="merit-form-wrapper">
-          <h1 className="page-title">Eligible Farmer Benefits & Schemes</h1>
+          <h1 className="page-title">{t('farmer.results.title')}</h1>
           <p className="page-description">
-            You are eligible for {scholarships.length} scheme(s) based on your profile
+            {t('farmer.results.subtitle', { count: scholarships.length })}
           </p>
 
           {scholarships.length === 0 ? (
             <div className="no-results">
-              <p>Sorry, you are not eligible for any farmer benefits based on your current profile.</p>
-              <p>Please check your land size, farmer type, and other details.</p>
+              <p>{t('farmer.results.none')}</p>
               <button onClick={() => setSubmitted(false)} className="btn-primary">
-                Update Profile
+                {t('farmer.results.updateProfile')}
               </button>
             </div>
           ) : (
@@ -224,7 +225,7 @@ const Farmer = () => {
 
                   {scholarship.steps && scholarship.steps.length > 0 && (
                     <div className="scholarship-steps">
-                      <h4>Application Steps:</h4>
+                      <h4>{t('farmer.scholarship.steps')}:</h4>
                       {scholarship.steps.map((step, idx) => (
                         <div key={idx} className="step-section">
                           <strong>{step.title}:</strong>
@@ -240,7 +241,7 @@ const Farmer = () => {
 
                   {scholarship.requiredDocuments && scholarship.requiredDocuments.length > 0 && (
                     <div className="required-documents">
-                      <h4>Required Documents:</h4>
+                      <h4>{t('farmer.scholarship.documents')}:</h4>
                       <ul>
                         {scholarship.requiredDocuments.map((doc, idx) => (
                           <li key={idx}>
@@ -259,14 +260,14 @@ const Farmer = () => {
                         rel="noopener noreferrer"
                         className="btn-link"
                       >
-                        Visit Official Website
+                        {t('farmer.scholarship.apply')}
                       </a>
                     )}
                     <button
                       onClick={() => downloadPDF(scholarship)}
                       className="btn-download"
                     >
-                      📥 Download PDF
+                      📥 {t('farmer.scholarship.downloadPDF')}
                     </button>
                     <button
                       onClick={() => {
@@ -297,10 +298,8 @@ const Farmer = () => {
   return (
     <div className="merit-container">
       <div className="merit-form-wrapper">
-        <h1 className="page-title">Farmer Benefits & Schemes Eligibility</h1>
-        <p className="page-description">
-          Fill in your farming details to find farmer benefits and schemes you're eligible for
-        </p>
+        <h1 className="page-title">{t('farmer.title')}</h1>
+        <p className="page-description">{t('farmer.subtitle')}</p>
 
         <form onSubmit={handleSubmit} className="merit-form">
           <div className="form-section">
@@ -561,7 +560,7 @@ const Farmer = () => {
 
           <div className="form-actions">
             <button type="submit" className="btn-primary" disabled={loading}>
-              {loading ? 'Checking Eligibility...' : 'Check Eligibility'}
+              {loading ? t('farmer.loading') : t('farmer.submit')}
             </button>
             <button
               type="button"

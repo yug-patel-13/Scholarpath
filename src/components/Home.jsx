@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { useAuth } from '../context/AuthContext';
 import { categoryAPI } from '../services/api';
 import './Home.css';
 
 const Home = ({ username }) => {
+  const { t } = useTranslation('global');
   const [chat, setChat] = useState(false);
   const [categories, setCategories] = useState([
     { id: 1, name: 'Farmer', imageUrl: 'https://images.unsplash.com/photo-1560493676-04071c5f467b?w=800&h=600&fit=crop', description: 'Find farmer-specific scholarships and benefits' },
@@ -88,19 +90,19 @@ const Home = ({ username }) => {
 
         <div className="hero-content">
           <h1 className="hero-title">
-            <span className="hero-title-line line-1">Find Your Perfect</span>
+            <span className="hero-title-line line-1">{t('home.hero.title')}</span>
             <span className="hero-title-line line-2 gradient-text">Scholarship</span>
           </h1>
           <p className="hero-subtitle">
-            Discover scholarships and benefits you're eligible for based on your profile
+            {t('home.hero.subtitle', 'Discover scholarships and benefits you\'re eligible for based on your profile')}
           </p>
           {!isAuthenticated && (
             <div className="hero-cta">
               <Link to="/Login" className="btn-primary">
-                Get Started
+                {t('common.getStarted', 'Get Started')}
               </Link>
               <Link to="/about" className="btn-secondary">
-                Learn More
+                {t('common.learnMore', 'Learn More')}
               </Link>
             </div>
           )}
@@ -148,16 +150,16 @@ const Home = ({ username }) => {
       {/* Categories Section - Always Visible */}
       <section className="categories-section">
         <div className="section-header">
-          <h2 className="section-title">Choose Your Category</h2>
+          <h2 className="section-title">{t('home.categories.title', 'Choose Your Category')}</h2>
           <p className="section-description">
             {isAuthenticated 
-              ? 'Select the category that best describes you to find relevant scholarships'
-              : 'Login to access category forms and find your eligible scholarships'}
+              ? t('home.categories.authenticated', 'Select the category that best describes you to find relevant scholarships')
+              : t('home.categories.unauthenticated', 'Login to access category forms and find your eligible scholarships')}
           </p>
           {!isAuthenticated && (
             <div className="login-prompt">
               <Link to="/Login" className="btn-primary">
-                Login to Get Started
+                {t('nav.login')} {t('common.toGetStarted', 'to Get Started')}
               </Link>
             </div>
           )}

@@ -1,33 +1,24 @@
 {
-  "about": {
-    "hero": {
-      "title": "About Us",
-      "description": "The government provides many scholarships, but most of us are unaware of them. Our mission is to bridge this gap and bring the right information to deserving individuals."
-    },
-    "mission": {
-      "title": "🎯 Our Goal",
-      "description": "We believe every student, farmer, woman, and economically weaker section member deserves equal opportunity. This platform is built to help such individuals discover the scholarships they truly deserve."
-    },
-    "features": {
-      "title": "💡 What We Offer",
-      "list": [
-        "✅ Easy access to scholarship info",
-        "✅ Category-based scholarship finder",
-        "✅ Verified and regularly updated data",
-        "✅ 100% free and user-friendly platform"
-      ]
-    }
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact",
+    "faq": "FAQ",
+    "login": "Login",
+    "logout": "Logout",
+    "formHelp": "Form Help",
+    "admin": "Admin",
+    "new": "NEW"
   },
   "home": {
     "hero": {
-      "title": "Get scholarship as :"
+      "title": "Get scholarship as :",
+      "subtitle": "Discover scholarships and benefits you're eligible for based on your profile"
     },
     "categories": {
-      "farmer": "farmer",
-      "sc": "(SC/ST/OBC/EBC)",
-      "women": "Girl Students/Women",
-      "ews": "EWS",
-      "merit": "Merit-Based Students"
+      "title": "Choose Your Category",
+      "authenticated": "Select the category that best describes you to find relevant scholarships",
+      "unauthenticated": "Login to access category forms and find your eligible scholarships"
     },
     "benefits": {
       "title": "Why Use Our Platform?",
@@ -42,23 +33,384 @@
       "message": "doubt? chat with us"
     }
   },
+  "login": {
+    "welcome": "Welcome Back!",
+    "subtitle": "Sign in to discover your eligible scholarships",
+    "title": "Sign In",
+    "description": "Enter your credentials to continue",
+    "email": "Email Address",
+    "emailPlaceholder": "Enter your email",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "forgotPassword": "Forgot Password?",
+    "signIn": "Sign In",
+    "noAccount": "Don't have an account?",
+    "createAccount": "Create Account",
+    "errors": {
+      "required": "Please enter both email and password",
+      "invalid": "Invalid credentials",
+      "error": "An error occurred during login"
+    }
+  },
+  "about": {
+    "hero": {
+      "title": "About ScholarPath",
+      "subtitle": "Your trusted partner in discovering scholarships and government benefits you're eligible for. We simplify the complex process of finding and applying for financial aid."
+    },
+    "mission": {
+      "title": "Our Mission",
+      "description": "At ScholarPath, we believe that financial constraints should never be a barrier to education. Our mission is to connect students and eligible individuals with the scholarships and benefits they deserve, making the application process as simple and transparent as possible.",
+      "stats": {
+        "scholarships": "Scholarships Available",
+        "categories": "Major Categories",
+        "users": "Happy Users"
+      }
+    },
+    "features": {
+      "title": "What We Offer",
+      "items": {
+        "eligibility": {
+          "title": "Accurate Eligibility Matching",
+          "description": "Our advanced algorithm ensures you only see scholarships and benefits you're fully eligible for, saving you time and effort."
+        },
+        "guidance": {
+          "title": "Step-by-Step Guidance",
+          "description": "Detailed instructions, document checklists, and progress tracking for each scholarship application."
+        },
+        "pdf": {
+          "title": "PDF Downloads",
+          "description": "Download complete information packages and application forms in PDF format for offline reference."
+        },
+        "locator": {
+          "title": "Cyber Cafe Locator",
+          "description": "Find the nearest cyber cafes to complete your application process with our location finder."
+        },
+        "formFill": {
+          "title": "Form Fill Service",
+          "description": "Get help filling out forms online via WhatsApp or book an offline service for doorstep assistance."
+        },
+        "tracking": {
+          "title": "Progress Tracking",
+          "description": "Track your application progress, set reminders, and stay organized throughout the process."
+        }
+      }
+    },
+    "howItWorks": {
+      "title": "How It Works",
+      "steps": {
+        "step1": {
+          "title": "Create Account",
+          "description": "Sign up for free and create your profile"
+        },
+        "step2": {
+          "title": "Select Category",
+          "description": "Choose from Farmer, SC/ST/OBC, Merit, Women, or EWS"
+        },
+        "step3": {
+          "title": "Fill Your Details",
+          "description": "Provide your information for accurate eligibility checking"
+        },
+        "step4": {
+          "title": "Get Results",
+          "description": "View eligible scholarships with complete details and steps"
+        },
+        "step5": {
+          "title": "Apply & Track",
+          "description": "Apply for scholarships and track your progress"
+        }
+      }
+    },
+    "categories": {
+      "title": "Our Categories",
+      "farmer": {
+        "title": "Farmer",
+        "description": "Benefits and scholarships for farmers and their children"
+      },
+      "sc": {
+        "title": "SC/ST/OBC",
+        "description": "Scholarships for Scheduled Castes, Scheduled Tribes, and Other Backward Classes"
+      },
+      "merit": {
+        "title": "Merit Based",
+        "description": "Merit-based scholarships for high-performing students"
+      },
+      "women": {
+        "title": "Women",
+        "description": "Scholarships specifically designed for women students"
+      },
+      "ews": {
+        "title": "EWS",
+        "description": "Economically Weaker Section scholarships and benefits"
+      }
+    },
+    "cta": {
+      "title": "Ready to Get Started?",
+      "subtitle": "Join thousands of students who found their perfect scholarship match",
+      "button": "Get Started Free"
+    },
+    "contact": {
+      "title": "Get In Touch",
+      "email": "Email",
+      "support": "Support",
+      "supportText": "We're here to help 24/7",
+      "social": "Social Media",
+      "socialText": "Follow us on social platforms",
+      "contactUs": "Contact Us",
+      "viewFaq": "View FAQ"
+    }
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "We'd love to hear from you",
+    "name": "Name",
+    "namePlaceholder": "Your Full Name",
+    "phone": "Phone Number",
+    "phonePlaceholder": "Phone Number",
+    "email": "Email",
+    "emailPlaceholder": "Email Address",
+    "message": "Message",
+    "messagePlaceholder": "Write your comment or feedback...",
+    "send": "Submit",
+    "success": "Thank you for your feedback! We will contact you soon.",
+    "error": "Something went wrong. Please try again."
+  },
   "faq": {
     "title": "Frequently Asked Questions",
-  
-        "q1": "Who can apply for scholarships?",
-        "a1": "Students from various categories like farmers, SC/ST/OBC, women, EWS, and merit-based individuals can apply if they meet the eligibility criteria.",
-  
-        "q2": "Is this platform free to use?",
-        "a2": "Yes, 100% free. You can search and explore all available scholarships without any charges.",
-    
-        "q3": "How do I know which scholarships I am eligible for?",
-        "a3": "Just select your category and answer a few questions. Our platform will filter the scholarships that best match your profile.",
-     
-        "q4": "Are the scholarships provided by the government?",
-        "a4": "Yes, all scholarships listed on our site are verified and issued by central or state governments.",
-     
-        "q5": "How often is the data updated?",
-        "a5": "We update our database regularly to include new schemes and remove expired ones."
-      
+    "q1": "Who can apply for scholarships?",
+    "a1": "Students from various categories like farmers, SC/ST/OBC, women, EWS, and merit-based individuals can apply if they meet the eligibility criteria.",
+    "q2": "Is this platform free to use?",
+    "a2": "Yes, 100% free. You can search and explore all available scholarships without any charges.",
+    "q3": "How do I know which scholarships I am eligible for?",
+    "a3": "Just select your category and answer a few questions. Our platform will filter the scholarships that best match your profile.",
+    "q4": "Are the scholarships provided by the government?",
+    "a4": "Yes, all scholarships listed on our site are verified and issued by central or state governments.",
+    "q5": "How often is the data updated?",
+    "a5": "We update our database regularly to include new schemes and remove expired ones."
+  },
+  "farmer": {
+    "title": "Farmer Scholarship Eligibility",
+    "subtitle": "Fill in your details to find farmer-specific scholarships you're eligible for",
+    "name": "Full Name",
+    "age": "Age",
+    "phone": "Phone Number",
+    "state": "State",
+    "district": "District",
+    "city": "City",
+    "pincode": "Pincode",
+    "aadhaar": "Aadhaar Number",
+    "annualIncome": "Annual Income (Rs.)",
+    "landSize": "Land Size (acres)",
+    "farmerType": "Farmer Type",
+    "farmerTypes": {
+      "marginal": "Marginal Farmer (< 1 hectare)",
+      "small": "Small Farmer (1-2 hectares)",
+      "large": "Large Farmer (> 2 hectares)"
+    },
+    "crop": "Main Crop",
+    "loanStatus": "Do you have any agricultural loan?",
+    "loanStatuses": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "submit": "Find Scholarships",
+    "loading": "Loading...",
+    "results": {
+      "title": "Eligible Scholarships",
+      "subtitle": "We found {count} scholarship(s) you're eligible for",
+      "none": "No scholarships found matching your profile.",
+      "updateProfile": "Update Profile"
+    },
+    "scholarship": {
+      "amount": "Rs. {amount}",
+      "description": "Description",
+      "steps": "Application Steps",
+      "documents": "Required Documents",
+      "downloadPDF": "Download PDF",
+      "apply": "Apply Now"
+    }
+  },
+  "sc": {
+    "title": "SC/ST/OBC Scholarship Eligibility",
+    "subtitle": "Fill in your details to find SC/ST/OBC scholarships you're eligible for",
+    "caste": "Caste",
+    "castes": {
+      "sc": "SC (Scheduled Caste)",
+      "st": "ST (Scheduled Tribe)",
+      "obc": "OBC (Other Backward Class)",
+      "ebc": "EBC (Economically Backward Class)"
+    },
+    "name": "Full Name",
+    "age": "Age",
+    "gender": "Gender",
+    "genders": {
+      "male": "Male",
+      "female": "Female",
+      "other": "Other"
+    },
+    "phone": "Phone Number",
+    "state": "State",
+    "district": "District",
+    "city": "City",
+    "pincode": "Pincode",
+    "aadhaar": "Aadhaar Number",
+    "annualIncome": "Annual Income (Rs.)",
+    "marks10": "10th Standard Marks (%)",
+    "marks12": "12th Standard Marks (%)",
+    "submit": "Find Scholarships",
+    "loading": "Loading...",
+    "results": {
+      "title": "Eligible Scholarships",
+      "subtitle": "We found {count} scholarship(s) you're eligible for",
+      "none": "No scholarships found matching your profile.",
+      "updateProfile": "Update Profile"
+    },
+    "scholarship": {
+      "amount": "Rs. {amount}",
+      "description": "Description",
+      "steps": "Application Steps",
+      "documents": "Required Documents",
+      "downloadPDF": "Download PDF",
+      "apply": "Apply Now"
+    }
+  },
+  "merit": {
+    "title": "Merit-Based & CMSS Scholarship Eligibility",
+    "subtitle": "Fill in your details to find merit-based scholarships and CMSS (Chief Minister Scholarship Scheme) you're eligible for",
+    "name": "Full Name",
+    "age": "Age",
+    "gender": "Gender",
+    "genders": {
+      "male": "Male",
+      "female": "Female",
+      "other": "Other"
+    },
+    "caste": "Caste",
+    "castes": {
+      "sc": "SC (Scheduled Caste)",
+      "st": "ST (Scheduled Tribe)",
+      "obc": "OBC (Other Backward Class)",
+      "ebc": "EBC (Economically Backward Class)",
+      "general": "General"
+    },
+    "phone": "Phone Number",
+    "state": "State",
+    "district": "District",
+    "city": "City",
+    "pincode": "Pincode",
+    "aadhaar": "Aadhaar Number",
+    "annualIncome": "Annual Income (Rs.)",
+    "marks10": "10th Standard Marks (%)",
+    "marks12": "12th Standard Marks (%)",
+    "cmssTitle": "CMSS Special Categories (Optional)",
+    "cmssDescription": "Chief Minister Scholarship Scheme (CMSS) has 7 special categories. Select if you belong to any of these:",
+    "cmssCategories": {
+      "lowLiteracyTaluka": "Low Literacy Taluka",
+      "childrenOfMartyrs": "Children of Martyrs",
+      "shramikCard": "Shramik Card Holder",
+      "disabilityCertificate": "Disability Certificate",
+      "widowCertificate": "Children of Widows",
+      "orphanCertificate": "Orphan Student",
+      "tyaktaCertificate": "Tyakta Certificate"
+    },
+    "submit": "Find Scholarships",
+    "loading": "Loading...",
+    "results": {
+      "title": "Eligible Scholarships",
+      "subtitle": "We found {count} scholarship(s) you're eligible for",
+      "none": "No scholarships found matching your profile.",
+      "updateProfile": "Update Profile"
+    },
+    "scholarship": {
+      "amount": "Rs. {amount}",
+      "description": "Description",
+      "steps": "Application Steps",
+      "documents": "Required Documents",
+      "downloadPDF": "Download PDF",
+      "apply": "Apply Now"
+    }
+  },
+  "woman": {
+    "title": "Women Scholarship Eligibility",
+    "subtitle": "Fill in your details to find women-specific scholarships you're eligible for",
+    "name": "Full Name",
+    "age": "Age",
+    "phone": "Phone Number",
+    "state": "State",
+    "district": "District",
+    "city": "City",
+    "pincode": "Pincode",
+    "aadhaar": "Aadhaar Number",
+    "annualIncome": "Annual Income (Rs.)",
+    "marks10": "10th Standard Marks (%)",
+    "marks12": "12th Standard Marks (%)",
+    "submit": "Find Scholarships",
+    "loading": "Loading...",
+    "results": {
+      "title": "Eligible Scholarships",
+      "subtitle": "We found {count} scholarship(s) you're eligible for",
+      "none": "No scholarships found matching your profile.",
+      "updateProfile": "Update Profile"
+    },
+    "scholarship": {
+      "amount": "Rs. {amount}",
+      "description": "Description",
+      "steps": "Application Steps",
+      "documents": "Required Documents",
+      "downloadPDF": "Download PDF",
+      "apply": "Apply Now"
+    }
+  },
+  "ews": {
+    "title": "EWS Scholarship Eligibility",
+    "subtitle": "Fill in your details to find EWS scholarships you're eligible for",
+    "name": "Full Name",
+    "age": "Age",
+    "phone": "Phone Number",
+    "state": "State",
+    "district": "District",
+    "city": "City",
+    "pincode": "Pincode",
+    "aadhaar": "Aadhaar Number",
+    "annualIncome": "Annual Income (Rs.)",
+    "marks10": "10th Standard Marks (%)",
+    "marks12": "12th Standard Marks (%)",
+    "submit": "Find Scholarships",
+    "loading": "Loading...",
+    "results": {
+      "title": "Eligible Scholarships",
+      "subtitle": "We found {count} scholarship(s) you're eligible for",
+      "none": "No scholarships found matching your profile.",
+      "updateProfile": "Update Profile"
+    },
+    "scholarship": {
+      "amount": "Rs. {amount}",
+      "description": "Description",
+      "steps": "Application Steps",
+      "documents": "Required Documents",
+      "downloadPDF": "Download PDF",
+      "apply": "Apply Now"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "getStarted": "Get Started",
+    "learnMore": "Learn More",
+    "toGetStarted": "to Get Started",
+    "tryAgain": "Please try again",
+    "personalInfo": "Personal Information",
+    "locationInfo": "Location Information",
+    "financialInfo": "Financial Information",
+    "academicInfo": "Academic Information"
   }
 }

@@ -4,9 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { userAPI as userProfileAPI, scholarshipAPI } from '../services/api';
 import { formFillRequestAPI } from '../services/api';
 import { jsPDF } from 'jspdf';
+import { useTranslation } from 'react-i18next';
 import './Merit.css';
 
 const Merit = () => {
+  const { t } = useTranslation('global');
   const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -141,7 +143,7 @@ const Merit = () => {
       setSubmitted(true);
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert('Error submitting form. Please try again.');
+      alert(t('common.error') + ': ' + (t('common.tryAgain', 'Please try again')));
     } finally {
       setLoading(false);
     }
@@ -206,16 +208,16 @@ const Merit = () => {
     return (
       <div className="merit-container">
         <div className="results-section">
-          <h1 className="page-title">Eligible Scholarships</h1>
+          <h1 className="page-title">{t('merit.results.title')}</h1>
           <p className="results-subtitle">
-            We found {scholarships.length} scholarship{scholarships.length !== 1 ? 's' : ''} you're eligible for
+            {t('merit.results.subtitle', { count: scholarships.length })}
           </p>
 
           {scholarships.length === 0 ? (
             <div className="no-results">
-              <p>No scholarships found matching your profile.</p>
+              <p>{t('merit.results.none')}</p>
               <button onClick={() => setSubmitted(false)} className="btn-secondary">
-                Update Profile
+                {t('merit.results.updateProfile')}
               </button>
             </div>
           ) : (
@@ -234,7 +236,7 @@ const Merit = () => {
 
                   {scholarship.steps && (
                     <div className="scholarship-steps">
-                      <h3>Application Steps:</h3>
+                      <h3>{t('merit.scholarship.steps')}:</h3>
                       {scholarship.steps.map((stepGroup, idx) => (
                         <div key={idx} className="step-group">
                           <h4>{stepGroup.title}</h4>
@@ -250,7 +252,7 @@ const Merit = () => {
 
                   {scholarship.requiredDocuments && (
                     <div className="required-documents">
-                      <h3>Required Documents:</h3>
+                      <h3>{t('merit.scholarship.documents')}:</h3>
                       <ul>
                         {scholarship.requiredDocuments.map((doc, idx) => (
                           <li key={idx}>{doc}</li>
@@ -267,14 +269,14 @@ const Merit = () => {
                         rel="noopener noreferrer"
                         className="btn-primary"
                       >
-                        Apply Now
+                        {t('merit.scholarship.apply')}
                       </a>
                     )}
                     <button
                       onClick={() => downloadPDF(scholarship)}
                       className="btn-secondary"
                     >
-                      📥 Download PDF
+                      📥 {t('merit.scholarship.downloadPDF')}
                     </button>
                     <button onClick={findNearestCyberCafe} className="btn-secondary">
                       📍 Find Cyber Cafe
@@ -298,10 +300,10 @@ const Merit = () => {
 
           <div className="actions-row">
             <button onClick={() => setSubmitted(false)} className="btn-secondary">
-              Update Profile
+              {t('merit.results.updateProfile')}
             </button>
             <a href="/form-fill-request" className="btn-primary">
-              Request Form Fill Help
+              {t('nav.formHelp')}
             </a>
           </div>
         </div>
@@ -312,54 +314,54 @@ const Merit = () => {
   return (
     <div className="merit-container">
       <div className="merit-form-wrapper">
-        <h1 className="page-title">Merit-Based & CMSS Scholarship Eligibility</h1>
+        <h1 className="page-title">{t('merit.title')}</h1>
         <p className="page-description">
-          Fill in your details to find merit-based scholarships and CMSS (Chief Minister Scholarship Scheme) you're eligible for
+          {t('merit.subtitle')}
         </p>
 
         <form onSubmit={handleSubmit} className="merit-form">
           {/* Personal Information */}
           <div className="form-section">
-            <h2 className="section-title">Personal Information</h2>
+            <h2 className="section-title">{t('common.personalInfo', 'Personal Information')}</h2>
             <div className="form-grid">
               <div className="form-group">
-                <label>Full Name <span className="required">*</span></label>
+                <label>{t('merit.name')} <span className="required">*</span></label>
                 <input
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  placeholder="Enter your full name"
+                  placeholder={t('merit.name')}
                 />
               </div>
 
               <div className="form-group">
-                <label>Email <span className="required">*</span></label>
+                <label>{t('login.email')} <span className="required">*</span></label>
                 <input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  placeholder="Enter your email"
+                  placeholder={t('login.emailPlaceholder')}
                 />
               </div>
 
               <div className="form-group">
-                <label>Phone Number <span className="required">*</span></label>
+                <label>{t('merit.phone')} <span className="required">*</span></label>
                 <input
                   type="tel"
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
                   required
-                  placeholder="Enter your phone number"
+                  placeholder={t('merit.phone')}
                 />
               </div>
 
               <div className="form-group">
-                <label>Age <span className="required">*</span></label>
+                <label>{t('merit.age')} <span className="required">*</span></label>
                 <input
                   type="number"
                   name="age"
@@ -368,39 +370,39 @@ const Merit = () => {
                   required
                   min="1"
                   max="100"
-                  placeholder="Enter your age"
+                  placeholder={t('merit.age')}
                 />
               </div>
 
               <div className="form-group">
-                <label>Gender <span className="required">*</span></label>
+                <label>{t('merit.gender')} <span className="required">*</span></label>
                 <select
                   name="gender"
                   value={formData.gender}
                   onChange={handleChange}
                   required
                 >
-                  <option value="">Select Gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
+                  <option value="">{t('merit.gender')}</option>
+                  <option value="male">{t('merit.genders.male')}</option>
+                  <option value="female">{t('merit.genders.female')}</option>
+                  <option value="other">{t('merit.genders.other')}</option>
                 </select>
               </div>
 
               <div className="form-group">
-                <label>Caste/Category <span className="required">*</span></label>
+                <label>{t('merit.caste')} <span className="required">*</span></label>
                 <select
                   name="caste"
                   value={formData.caste}
                   onChange={handleChange}
                   required
                 >
-                  <option value="">Select Category</option>
-                  <option value="general">General</option>
-                  <option value="sc">SC (Scheduled Caste)</option>
-                  <option value="st">ST (Scheduled Tribe)</option>
-                  <option value="obc">OBC (Other Backward Class)</option>
-                  <option value="ebc">EBC (Economically Backward Class)</option>
+                  <option value="">{t('merit.caste')}</option>
+                  <option value="general">{t('merit.castes.general')}</option>
+                  <option value="sc">{t('merit.castes.sc')}</option>
+                  <option value="st">{t('merit.castes.st')}</option>
+                  <option value="obc">{t('merit.castes.obc')}</option>
+                  <option value="ebc">{t('merit.castes.ebc')}</option>
                 </select>
               </div>
             </div>
@@ -408,50 +410,50 @@ const Merit = () => {
 
           {/* Location Information */}
           <div className="form-section">
-            <h2 className="section-title">Location Information</h2>
+            <h2 className="section-title">{t('common.locationInfo', 'Location Information')}</h2>
             <div className="form-grid">
               <div className="form-group">
-                <label>State <span className="required">*</span></label>
+                <label>{t('merit.state')} <span className="required">*</span></label>
                 <input
                   type="text"
                   name="state"
                   value={formData.state}
                   onChange={handleChange}
                   required
-                  placeholder="Enter your state"
+                  placeholder={t('merit.state')}
                 />
               </div>
 
               <div className="form-group">
-                <label>District</label>
+                <label>{t('merit.district')}</label>
                 <input
                   type="text"
                   name="district"
                   value={formData.district}
                   onChange={handleChange}
-                  placeholder="Enter your district"
+                  placeholder={t('merit.district')}
                 />
               </div>
 
               <div className="form-group">
-                <label>City</label>
+                <label>{t('merit.city')}</label>
                 <input
                   type="text"
                   name="city"
                   value={formData.city}
                   onChange={handleChange}
-                  placeholder="Enter your city"
+                  placeholder={t('merit.city')}
                 />
               </div>
 
               <div className="form-group">
-                <label>Pincode</label>
+                <label>{t('merit.pincode')}</label>
                 <input
                   type="text"
                   name="pincode"
                   value={formData.pincode}
                   onChange={handleChange}
-                  placeholder="Enter pincode"
+                  placeholder={t('merit.pincode')}
                 />
               </div>
             </div>
@@ -459,10 +461,10 @@ const Merit = () => {
 
           {/* Financial Information */}
           <div className="form-section">
-            <h2 className="section-title">Financial Information</h2>
+            <h2 className="section-title">{t('common.financialInfo', 'Financial Information')}</h2>
             <div className="form-grid">
               <div className="form-group">
-                <label>Annual Family Income (Rs.) <span className="required">*</span></label>
+                <label>{t('merit.annualIncome')} <span className="required">*</span></label>
                 <input
                   type="number"
                   name="annualIncome"
@@ -470,18 +472,18 @@ const Merit = () => {
                   onChange={handleChange}
                   required
                   min="0"
-                  placeholder="Enter annual family income"
+                  placeholder={t('merit.annualIncome')}
                 />
               </div>
 
               <div className="form-group">
-                <label>Aadhaar Number</label>
+                <label>{t('merit.aadhaar')}</label>
                 <input
                   type="text"
                   name="aadhaar"
                   value={formData.aadhaar}
                   onChange={handleChange}
-                  placeholder="Enter Aadhaar number (12 digits)"
+                  placeholder={t('merit.aadhaar')}
                   maxLength="12"
                 />
               </div>
@@ -490,10 +492,10 @@ const Merit = () => {
 
           {/* Academic Information */}
           <div className="form-section">
-            <h2 className="section-title">Academic Information</h2>
+            <h2 className="section-title">{t('common.academicInfo', 'Academic Information')}</h2>
             <div className="form-grid">
               <div className="form-group">
-                <label>10th Marks (%) <span className="required">*</span></label>
+                <label>{t('merit.marks10')} <span className="required">*</span></label>
                 <input
                   type="number"
                   name="marks10"
@@ -503,12 +505,12 @@ const Merit = () => {
                   min="0"
                   max="100"
                   step="0.01"
-                  placeholder="Enter 10th percentage"
+                  placeholder={t('merit.marks10')}
                 />
               </div>
 
               <div className="form-group">
-                <label>12th Marks (%) <span className="required">*</span></label>
+                <label>{t('merit.marks12')} <span className="required">*</span></label>
                 <input
                   type="number"
                   name="marks12"
@@ -518,7 +520,7 @@ const Merit = () => {
                   min="0"
                   max="100"
                   step="0.01"
-                  placeholder="Enter 12th percentage"
+                  placeholder={t('merit.marks12')}
                 />
               </div>
 
@@ -548,9 +550,9 @@ const Merit = () => {
 
           {/* CMSS Special Categories */}
           <div className="form-section">
-            <h2 className="section-title">CMSS Special Categories (Optional)</h2>
+            <h2 className="section-title">{t('merit.cmssTitle')}</h2>
             <p className="section-description" style={{ marginBottom: '20px', color: '#666', fontSize: '0.9rem' }}>
-              Chief Minister Scholarship Scheme (CMSS) has 7 special categories. Select if you belong to any of these:
+              {t('merit.cmssDescription')}
             </p>
             <div className="form-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
               <div className="form-group" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -562,7 +564,7 @@ const Merit = () => {
                   id="lowLiteracyTaluka"
                 />
                 <label htmlFor="lowLiteracyTaluka" style={{ margin: 0, cursor: 'pointer' }}>
-                  List of Taluka Having below 50% Literacy Rate (૫૦% થી ઓછો સાક્ષરતા દર)
+                  {t('merit.cmssCategories.lowLiteracyTaluka')}
                 </label>
               </div>
 
@@ -575,7 +577,7 @@ const Merit = () => {
                   id="childrenOfMartyrs"
                 />
                 <label htmlFor="childrenOfMartyrs" style={{ margin: 0, cursor: 'pointer' }}>
-                  Children of Martyrs (શહીદ જવાન અંગેનું પ્રમાણપત્ર)
+                  {t('merit.cmssCategories.childrenOfMartyrs')}
                 </label>
               </div>
 
@@ -588,7 +590,7 @@ const Merit = () => {
                   id="shramikCard"
                 />
                 <label htmlFor="shramikCard" style={{ margin: 0, cursor: 'pointer' }}>
-                  Shramik Card (માન્ય શ્રમિક કાર્ડની વિગત)
+                  {t('merit.cmssCategories.shramikCard')}
                 </label>
               </div>
 
@@ -601,7 +603,7 @@ const Merit = () => {
                   id="disabilityCertificate"
                 />
                 <label htmlFor="disabilityCertificate" style={{ margin: 0, cursor: 'pointer' }}>
-                  Disability Certificate (વિકલાંગતા પ્રમાણપત્ર)
+                  {t('merit.cmssCategories.disabilityCertificate')}
                 </label>
               </div>
 
@@ -614,7 +616,7 @@ const Merit = () => {
                   id="widowCertificate"
                 />
                 <label htmlFor="widowCertificate" style={{ margin: 0, cursor: 'pointer' }}>
-                  Widow Certificate (વિધવા પ્રમાણપત્ર)
+                  {t('merit.cmssCategories.widowCertificate')}
                 </label>
               </div>
 
@@ -627,7 +629,7 @@ const Merit = () => {
                   id="orphanCertificate"
                 />
                 <label htmlFor="orphanCertificate" style={{ margin: 0, cursor: 'pointer' }}>
-                  Orphan Certificate (અનાથ અંગેનું પ્રમાણપત્ર)
+                  {t('merit.cmssCategories.orphanCertificate')}
                 </label>
               </div>
 
@@ -640,7 +642,7 @@ const Merit = () => {
                   id="tyaktaCertificate"
                 />
                 <label htmlFor="tyaktaCertificate" style={{ margin: 0, cursor: 'pointer' }}>
-                  Tyakta Certificate (ત્યકતા અંગેનું પ્રમાણપત્ર)
+                  {t('merit.cmssCategories.tyaktaCertificate')}
                 </label>
               </div>
             </div>
@@ -677,14 +679,14 @@ const Merit = () => {
 
           <div className="form-actions">
             <button type="submit" className="btn-primary" disabled={loading}>
-              {loading ? 'Checking Eligibility...' : 'Check Eligibility'}
+              {loading ? t('merit.loading') : t('merit.submit')}
             </button>
             <button
               type="button"
               onClick={() => navigate('/')}
               className="btn-secondary"
             >
-              Cancel
+              {t('common.cancel')}
             </button>
           </div>
         </form>

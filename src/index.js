@@ -10,14 +10,23 @@ import global_hn from './components/hn/global.json';
 import i18next from 'i18next';
 import { I18nextProvider } from 'react-i18next';
 
+// Get saved language from localStorage or default to 'en'
+const savedLanguage = localStorage.getItem('i18nextLng') || 'en';
+
 i18next.init({
   interpolation: { escapeValue: false },
-  lng: 'en', // Default language
+  lng: savedLanguage, // Use saved language or default to 'en'
+  fallbackLng: 'en',
   resources: {
     en: { global: global_en },
     guj: { global: global_guj },
-    hn:{global:global_hn}
+    hn: { global: global_hn }
   },
+});
+
+// Save language preference when changed
+i18next.on('languageChanged', (lng) => {
+  localStorage.setItem('i18nextLng', lng);
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

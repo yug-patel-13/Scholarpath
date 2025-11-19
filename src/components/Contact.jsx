@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './Contact.css';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 
 const Contact = () => {
+  const { t } = useTranslation('global');
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -33,25 +35,26 @@ const Contact = () => {
         comment
       });
 
-      alert("Thank you for your feedback!");
+      alert(t('contact.success'));
       setName("");
       setPhone("");
       setEmail("");
       setComment("");
-      setPara("We will contact you soon. Thank you!");
+      setPara(t('contact.success'));
       fetchdata();
     } catch (err) {
-      alert("Something went wrong");
+      alert(t('contact.error'));
     }
   };
 
   return (
     <div className="contact-container">
-      <h1>Contact Us</h1>
+      <h1>{t('contact.title')}</h1>
+      <p className="contact-subtitle">{t('contact.subtitle')}</p>
       <form onSubmit={handleSubmit} className="contact-form">
         <input
           type="text"
-          placeholder="Your Full Name"
+          placeholder={t('contact.namePlaceholder')}
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
@@ -59,7 +62,7 @@ const Contact = () => {
 
         <input
           type="tel"
-          placeholder="Phone Number"
+          placeholder={t('contact.phonePlaceholder')}
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
           required
@@ -67,14 +70,14 @@ const Contact = () => {
 
         <input
           type="email"
-          placeholder="Email Address"
+          placeholder={t('contact.emailPlaceholder')}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
 
         <textarea
-          placeholder="Write your comment or feedback..."
+          placeholder={t('contact.messagePlaceholder')}
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           rows="5"
@@ -82,7 +85,7 @@ const Contact = () => {
         />
 
         {para && <div className="success-message">{para}</div>}
-        <button type="submit">Submit</button>
+        <button type="submit">{t('contact.send')}</button>
       </form>
     </div>
   );

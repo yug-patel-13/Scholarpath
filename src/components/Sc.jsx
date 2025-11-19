@@ -3,9 +3,11 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { userAPI as userProfileAPI, scholarshipAPI } from '../services/api';
 import { jsPDF } from 'jspdf';
-import './Merit.css';
+import { useTranslation } from 'react-i18next';
+import './Sc.css';
 
 const Sc = () => {
+  const { t } = useTranslation('global');
   const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -193,17 +195,16 @@ const Sc = () => {
     return (
       <div className="merit-container">
         <div className="merit-form-wrapper">
-          <h1 className="page-title">Eligible SC/ST/OBC Scholarships & Benefits</h1>
+          <h1 className="page-title">{t('sc.results.title')}</h1>
           <p className="page-description">
-            You are eligible for {scholarships.length} scholarship(s) based on your profile
+            {t('sc.results.subtitle', { count: scholarships.length })}
           </p>
 
           {scholarships.length === 0 ? (
             <div className="no-results">
-              <p>Sorry, you are not eligible for any scholarships based on your current profile.</p>
-              <p>Please check your caste category, income, and academic marks.</p>
+              <p>{t('sc.results.none')}</p>
               <button onClick={() => setSubmitted(false)} className="btn-primary">
-                Update Profile
+                {t('sc.results.updateProfile')}
               </button>
             </div>
           ) : (
@@ -225,7 +226,7 @@ const Sc = () => {
 
                   {scholarship.steps && scholarship.steps.length > 0 && (
                     <div className="scholarship-steps">
-                      <h4>Application Steps:</h4>
+                      <h4>{t('sc.scholarship.steps')}:</h4>
                       {scholarship.steps.map((step, idx) => (
                         <div key={idx} className="step-section">
                           <strong>{step.title}:</strong>
@@ -241,7 +242,7 @@ const Sc = () => {
 
                   {scholarship.requiredDocuments && scholarship.requiredDocuments.length > 0 && (
                     <div className="required-documents">
-                      <h4>Required Documents:</h4>
+                      <h4>{t('sc.scholarship.documents')}:</h4>
                       <ul>
                         {scholarship.requiredDocuments.map((doc, idx) => (
                           <li key={idx}>
@@ -260,14 +261,14 @@ const Sc = () => {
                         rel="noopener noreferrer"
                         className="btn-link"
                       >
-                        Visit Official Website
+                        {t('sc.scholarship.apply')}
                       </a>
                     )}
                     <button
                       onClick={() => downloadPDF(scholarship)}
                       className="btn-download"
                     >
-                      📥 Download PDF
+                      📥 {t('sc.scholarship.downloadPDF')}
                     </button>
                     <button
                       onClick={() => {
@@ -277,7 +278,7 @@ const Sc = () => {
                       }}
                       className="btn-request"
                     >
-                      📋 Request Form Fill
+                      📋 {t('nav.formHelp')}
                     </button>
                   </div>
                 </div>
@@ -287,7 +288,7 @@ const Sc = () => {
 
           <div className="actions-row">
             <button onClick={() => setSubmitted(false)} className="btn-secondary">
-              Update Profile
+              {t('sc.results.updateProfile')}
             </button>
           </div>
         </div>
@@ -298,53 +299,51 @@ const Sc = () => {
   return (
     <div className="merit-container">
       <div className="merit-form-wrapper">
-        <h1 className="page-title">SC/ST/OBC Scholarship Eligibility</h1>
-        <p className="page-description">
-          Fill in your details to find SC/ST/OBC scholarships you're eligible for. Academic marks are required for most schemes.
-        </p>
+        <h1 className="page-title">{t('sc.title')}</h1>
+        <p className="page-description">{t('sc.subtitle')}</p>
 
         <form onSubmit={handleSubmit} className="merit-form">
           <div className="form-section">
-            <h2 className="section-title">Personal Information</h2>
+            <h2 className="section-title">{t('common.personalInfo', 'Personal Information')}</h2>
             <div className="form-grid">
               <div className="form-group">
-                <label>Full Name <span className="required">*</span></label>
+                <label>{t('sc.name')} <span className="required">*</span></label>
                 <input
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  placeholder="Enter your full name"
+                  placeholder={t('sc.name')}
                 />
               </div>
 
               <div className="form-group">
-                <label>Email <span className="required">*</span></label>
+                <label>{t('login.email')} <span className="required">*</span></label>
                 <input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  placeholder="Enter your email"
+                  placeholder={t('login.emailPlaceholder')}
                 />
               </div>
 
               <div className="form-group">
-                <label>Phone Number <span className="required">*</span></label>
+                <label>{t('sc.phone')} <span className="required">*</span></label>
                 <input
                   type="tel"
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
                   required
-                  placeholder="Enter your phone number"
+                  placeholder={t('sc.phone')}
                 />
               </div>
 
               <div className="form-group">
-                <label>Age <span className="required">*</span></label>
+                <label>{t('sc.age')} <span className="required">*</span></label>
                 <input
                   type="number"
                   name="age"
@@ -353,41 +352,38 @@ const Sc = () => {
                   required
                   min="1"
                   max="100"
-                  placeholder="Enter your age"
+                  placeholder={t('sc.age')}
                 />
               </div>
 
               <div className="form-group">
-                <label>Gender <span className="required">*</span></label>
+                <label>{t('sc.gender')} <span className="required">*</span></label>
                 <select
                   name="gender"
                   value={formData.gender}
                   onChange={handleChange}
                   required
                 >
-                  <option value="">Select Gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
+                  <option value="">{t('sc.gender')}</option>
+                  <option value="male">{t('sc.genders.male')}</option>
+                  <option value="female">{t('sc.genders.female')}</option>
+                  <option value="other">{t('sc.genders.other')}</option>
                 </select>
               </div>
 
               <div className="form-group">
-                <label>Caste/Category <span className="required">*</span></label>
+                <label>{t('sc.caste')} <span className="required">*</span></label>
                 <select
                   name="caste"
                   value={formData.caste}
                   onChange={handleChange}
                   required
                 >
-                  <option value="">Select Category</option>
-                  <option value="sc">SC (Scheduled Caste)</option>
-                  <option value="st">ST (Scheduled Tribe)</option>
-                  <option value="obc">OBC (Other Backward Class)</option>
+                  <option value="">{t('sc.caste')}</option>
+                  <option value="sc">{t('sc.castes.sc')}</option>
+                  <option value="st">{t('sc.castes.st')}</option>
+                  <option value="obc">{t('sc.castes.obc')}</option>
                 </select>
-                <small style={{ color: '#666', fontSize: '0.85rem', marginTop: '5px' }}>
-                  Required - Must match your caste certificate
-                </small>
               </div>
             </div>
           </div>
@@ -568,7 +564,7 @@ const Sc = () => {
 
           <div className="form-actions">
             <button type="submit" className="btn-primary" disabled={loading}>
-              {loading ? 'Checking Eligibility...' : 'Check Eligibility'}
+              {loading ? t('sc.loading') : t('sc.submit')}
             </button>
             <button
               type="button"

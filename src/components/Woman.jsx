@@ -3,9 +3,11 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { userAPI as userProfileAPI, scholarshipAPI } from '../services/api';
 import { jsPDF } from 'jspdf';
-import './Merit.css';
+import { useTranslation } from 'react-i18next';
+import './Woman.css';
 
 const Woman = () => {
+  const { t } = useTranslation('global');
   const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -194,16 +196,16 @@ const Woman = () => {
     return (
       <div className="merit-container">
         <div className="merit-form-wrapper">
-          <h1 className="page-title">Eligible Scholarships & Benefits for Women</h1>
+          <h1 className="page-title">{t('woman.results.title')}</h1>
           <p className="page-description">
-            You are eligible for {scholarships.length} scholarship(s) based on your profile
+            {t('woman.results.subtitle', { count: scholarships.length })}
           </p>
 
           {scholarships.length === 0 ? (
             <div className="no-results">
-              <p>Sorry, you are not eligible for any scholarships based on your current profile.</p>
+              <p>{t('woman.results.none')}</p>
               <button onClick={() => setSubmitted(false)} className="btn-primary">
-                Update Profile
+                {t('woman.results.updateProfile')}
               </button>
             </div>
           ) : (
@@ -225,7 +227,7 @@ const Woman = () => {
 
                   {scholarship.steps && scholarship.steps.length > 0 && (
                     <div className="scholarship-steps">
-                      <h4>Application Steps:</h4>
+                      <h4>{t('woman.scholarship.steps')}:</h4>
                       {scholarship.steps.map((step, idx) => (
                         <div key={idx} className="step-section">
                           <strong>{step.title}:</strong>
@@ -241,7 +243,7 @@ const Woman = () => {
 
                   {scholarship.requiredDocuments && scholarship.requiredDocuments.length > 0 && (
                     <div className="required-documents">
-                      <h4>Required Documents:</h4>
+                      <h4>{t('woman.scholarship.documents')}:</h4>
                       <ul>
                         {scholarship.requiredDocuments.map((doc, idx) => (
                           <li key={idx}>
@@ -260,14 +262,14 @@ const Woman = () => {
                         rel="noopener noreferrer"
                         className="btn-link"
                       >
-                        Visit Official Website
+                        {t('woman.scholarship.apply')}
                       </a>
                     )}
                     <button
                       onClick={() => downloadPDF(scholarship)}
                       className="btn-download"
                     >
-                      📥 Download PDF
+                      📥 {t('woman.scholarship.downloadPDF')}
                     </button>
                     <button
                       onClick={() => {
@@ -277,7 +279,7 @@ const Woman = () => {
                       }}
                       className="btn-request"
                     >
-                      📋 Request Form Fill
+                      📋 {t('nav.formHelp')}
                     </button>
                   </div>
                 </div>
@@ -298,10 +300,8 @@ const Woman = () => {
   return (
     <div className="merit-container">
       <div className="merit-form-wrapper">
-        <h1 className="page-title">Women's Scholarship & Benefits Eligibility</h1>
-        <p className="page-description">
-          Fill in your details to find women-specific scholarships and benefits you're eligible for
-        </p>
+        <h1 className="page-title">{t('woman.title')}</h1>
+        <p className="page-description">{t('woman.subtitle')}</p>
 
         <form onSubmit={handleSubmit} className="merit-form">
           <div className="form-section">
@@ -570,7 +570,7 @@ const Woman = () => {
 
           <div className="form-actions">
             <button type="submit" className="btn-primary" disabled={loading}>
-              {loading ? 'Checking Eligibility...' : 'Check Eligibility'}
+              {loading ? t('woman.loading') : t('woman.submit')}
             </button>
             <button
               type="button"

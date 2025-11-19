@@ -2,20 +2,20 @@ import React from 'react';
 import './About.css';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 const About = () => {
   const { isAuthenticated } = useAuth();
+  const { t } = useTranslation('global');
 
   return (
     <div className="about-page-container">
       {/* Hero Section */}
       <section className="about-hero">
         <div className="about-hero-content">
-          <h1 className="about-main-title">About ScholarPath</h1>
+          <h1 className="about-main-title">{t('about.hero.title')}</h1>
           <p className="about-hero-text">
-            Your trusted partner in discovering scholarships and government benefits
-            you're eligible for. We simplify the complex process of finding and
-            applying for financial aid.
+            {t('about.hero.subtitle')}
           </p>
         </div>
       </section>
@@ -24,25 +24,22 @@ const About = () => {
       <section className="about-mission">
         <div className="container">
           <div className="mission-content">
-            <h2 className="section-title">Our Mission</h2>
+            <h2 className="section-title">{t('about.mission.title')}</h2>
             <p className="mission-text">
-              At ScholarPath, we believe that financial constraints should never be
-              a barrier to education. Our mission is to connect students and eligible
-              individuals with the scholarships and benefits they deserve, making the
-              application process as simple and transparent as possible.
+              {t('about.mission.description')}
             </p>
             <div className="mission-stats">
               <div className="mission-stat">
                 <div className="stat-number">100+</div>
-                <div className="stat-label">Scholarships Available</div>
+                <div className="stat-label">{t('about.mission.stats.scholarships')}</div>
               </div>
               <div className="mission-stat">
                 <div className="stat-number">5</div>
-                <div className="stat-label">Major Categories</div>
+                <div className="stat-label">{t('about.mission.stats.categories')}</div>
               </div>
               <div className="mission-stat">
                 <div className="stat-number">1000+</div>
-                <div className="stat-label">Happy Users</div>
+                <div className="stat-label">{t('about.mission.stats.users')}</div>
               </div>
             </div>
           </div>
@@ -52,54 +49,48 @@ const About = () => {
       {/* Features Section */}
       <section className="about-features">
         <div className="container">
-          <h2 className="section-title center">What We Offer</h2>
+          <h2 className="section-title center">{t('about.features.title')}</h2>
           <div className="features-grid">
             <div className="feature-box">
               <div className="feature-icon">🎯</div>
-              <h3>Accurate Eligibility Matching</h3>
+              <h3>{t('about.features.items.eligibility.title')}</h3>
               <p>
-                Our advanced algorithm ensures you only see scholarships and benefits
-                you're fully eligible for, saving you time and effort.
+                {t('about.features.items.eligibility.description')}
               </p>
             </div>
             <div className="feature-box">
               <div className="feature-icon">📋</div>
-              <h3>Step-by-Step Guidance</h3>
+              <h3>{t('about.features.items.guidance.title')}</h3>
               <p>
-                Detailed instructions, document checklists, and progress tracking
-                for each scholarship application.
+                {t('about.features.items.guidance.description')}
               </p>
             </div>
             <div className="feature-box">
               <div className="feature-icon">📄</div>
-              <h3>PDF Downloads</h3>
+              <h3>{t('about.features.items.pdf.title')}</h3>
               <p>
-                Download complete information packages and application forms in
-                PDF format for offline reference.
+                {t('about.features.items.pdf.description')}
               </p>
             </div>
             <div className="feature-box">
               <div className="feature-icon">📍</div>
-              <h3>Cyber Cafe Locator</h3>
+              <h3>{t('about.features.items.locator.title')}</h3>
               <p>
-                Find the nearest cyber cafes to complete your application process
-                with our location finder.
+                {t('about.features.items.locator.description')}
               </p>
             </div>
             <div className="feature-box">
               <div className="feature-icon">💬</div>
-              <h3>Form Fill Service</h3>
+              <h3>{t('about.features.items.formFill.title')}</h3>
               <p>
-                Get help filling out forms online via WhatsApp or book an offline
-                service for doorstep assistance.
+                {t('about.features.items.formFill.description')}
               </p>
             </div>
             <div className="feature-box">
               <div className="feature-icon">✅</div>
-              <h3>Progress Tracking</h3>
+              <h3>{t('about.features.items.tracking.title')}</h3>
               <p>
-                Track your application progress, set reminders, and stay organized
-                throughout the process.
+                {t('about.features.items.tracking.description')}
               </p>
             </div>
           </div>
@@ -109,45 +100,45 @@ const About = () => {
       {/* How It Works Section */}
       <section className="about-how-it-works">
         <div className="container">
-          <h2 className="section-title center">How It Works</h2>
+          <h2 className="section-title center">{t('about.howItWorks.title')}</h2>
           <div className="steps-container">
             <div className="step-item">
               <div className="step-number">1</div>
               <div className="step-content">
-                <h3>Create Account</h3>
-                <p>Sign up for free and create your profile</p>
+                <h3>{t('about.howItWorks.steps.step1.title')}</h3>
+                <p>{t('about.howItWorks.steps.step1.description')}</p>
               </div>
             </div>
             <div className="step-arrow">→</div>
             <div className="step-item">
               <div className="step-number">2</div>
               <div className="step-content">
-                <h3>Select Category</h3>
-                <p>Choose from Farmer, SC/ST/OBC, Merit, Women, or EWS</p>
+                <h3>{t('about.howItWorks.steps.step2.title')}</h3>
+                <p>{t('about.howItWorks.steps.step2.description')}</p>
               </div>
             </div>
             <div className="step-arrow">→</div>
             <div className="step-item">
               <div className="step-number">3</div>
               <div className="step-content">
-                <h3>Fill Your Details</h3>
-                <p>Provide your information for accurate eligibility checking</p>
+                <h3>{t('about.howItWorks.steps.step3.title')}</h3>
+                <p>{t('about.howItWorks.steps.step3.description')}</p>
               </div>
             </div>
             <div className="step-arrow">→</div>
             <div className="step-item">
               <div className="step-number">4</div>
               <div className="step-content">
-                <h3>Get Results</h3>
-                <p>View eligible scholarships with complete details and steps</p>
+                <h3>{t('about.howItWorks.steps.step4.title')}</h3>
+                <p>{t('about.howItWorks.steps.step4.description')}</p>
               </div>
             </div>
             <div className="step-arrow">→</div>
             <div className="step-item">
               <div className="step-number">5</div>
               <div className="step-content">
-                <h3>Apply & Track</h3>
-                <p>Apply for scholarships and track your progress</p>
+                <h3>{t('about.howItWorks.steps.step5.title')}</h3>
+                <p>{t('about.howItWorks.steps.step5.description')}</p>
               </div>
             </div>
           </div>
@@ -157,32 +148,32 @@ const About = () => {
       {/* Categories Section */}
       <section className="about-categories">
         <div className="container">
-          <h2 className="section-title center">Our Categories</h2>
+          <h2 className="section-title center">{t('about.categories.title')}</h2>
           <div className="categories-list">
             <div className="category-item">
               <div className="category-icon">👨‍🌾</div>
-              <h3>Farmer</h3>
-              <p>Benefits and scholarships for farmers and their children</p>
+              <h3>{t('about.categories.farmer.title')}</h3>
+              <p>{t('about.categories.farmer.description')}</p>
             </div>
             <div className="category-item">
               <div className="category-icon">📜</div>
-              <h3>SC/ST/OBC</h3>
-              <p>Scholarships for Scheduled Castes, Scheduled Tribes, and Other Backward Classes</p>
+              <h3>{t('about.categories.sc.title')}</h3>
+              <p>{t('about.categories.sc.description')}</p>
             </div>
             <div className="category-item">
               <div className="category-icon">🎓</div>
-              <h3>Merit Based</h3>
-              <p>Merit-based scholarships for high-performing students</p>
+              <h3>{t('about.categories.merit.title')}</h3>
+              <p>{t('about.categories.merit.description')}</p>
             </div>
             <div className="category-item">
               <div className="category-icon">👩</div>
-              <h3>Women</h3>
-              <p>Scholarships specifically designed for women students</p>
+              <h3>{t('about.categories.women.title')}</h3>
+              <p>{t('about.categories.women.description')}</p>
             </div>
             <div className="category-item">
               <div className="category-icon">💰</div>
-              <h3>EWS</h3>
-              <p>Economically Weaker Section scholarships and benefits</p>
+              <h3>{t('about.categories.ews.title')}</h3>
+              <p>{t('about.categories.ews.description')}</p>
             </div>
           </div>
         </div>
@@ -193,10 +184,10 @@ const About = () => {
         <section className="about-cta">
           <div className="container">
             <div className="cta-box">
-              <h2>Ready to Get Started?</h2>
-              <p>Join thousands of students who found their perfect scholarship match</p>
+              <h2>{t('about.cta.title')}</h2>
+              <p>{t('about.cta.subtitle')}</p>
               <Link to="/Login" className="btn-primary-large">
-                Get Started Free
+                {t('about.cta.button')}
               </Link>
             </div>
           </div>
@@ -206,30 +197,30 @@ const About = () => {
       {/* Contact Section */}
       <section className="about-contact">
         <div className="container">
-          <h2 className="section-title center">Get In Touch</h2>
+          <h2 className="section-title center">{t('about.contact.title')}</h2>
           <div className="contact-info">
             <div className="contact-item">
               <div className="contact-icon">📧</div>
-              <h3>Email</h3>
+              <h3>{t('about.contact.email')}</h3>
               <p>yugpatelart@gmail.com</p>
             </div>
             <div className="contact-item">
               <div className="contact-icon">💬</div>
-              <h3>Support</h3>
-              <p>We're here to help 24/7</p>
+              <h3>{t('about.contact.support')}</h3>
+              <p>{t('about.contact.supportText')}</p>
             </div>
             <div className="contact-item">
               <div className="contact-icon">🌐</div>
-              <h3>Social Media</h3>
-              <p>Follow us on social platforms</p>
+              <h3>{t('about.contact.social')}</h3>
+              <p>{t('about.contact.socialText')}</p>
             </div>
           </div>
           <div className="contact-actions">
             <Link to="/contact" className="btn-secondary-large">
-              Contact Us
+              {t('about.contact.contactUs')}
             </Link>
             <Link to="/faq" className="btn-secondary-large">
-              View FAQ
+              {t('about.contact.viewFaq')}
             </Link>
           </div>
         </div>

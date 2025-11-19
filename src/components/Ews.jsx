@@ -3,9 +3,11 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { userAPI as userProfileAPI, scholarshipAPI } from '../services/api';
 import { jsPDF } from 'jspdf';
-import './Merit.css';
+import { useTranslation } from 'react-i18next';
+import './Ews.css';
 
 const Ews = () => {
+  const { t } = useTranslation('global');
   const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -186,17 +188,16 @@ const Ews = () => {
     return (
       <div className="merit-container">
         <div className="merit-form-wrapper">
-          <h1 className="page-title">Eligible EWS Scholarships & Benefits</h1>
+          <h1 className="page-title">{t('ews.results.title')}</h1>
           <p className="page-description">
-            You are eligible for {scholarships.length} scholarship(s) based on your profile
+            {t('ews.results.subtitle', { count: scholarships.length })}
           </p>
 
           {scholarships.length === 0 ? (
             <div className="no-results">
-              <p>Sorry, you are not eligible for any scholarships based on your current profile.</p>
-              <p>Please ensure you have an EWS certificate and family income is below Rs. 8 lakh.</p>
+              <p>{t('ews.results.none')}</p>
               <button onClick={() => setSubmitted(false)} className="btn-primary">
-                Update Profile
+                {t('ews.results.updateProfile')}
               </button>
             </div>
           ) : (
@@ -218,7 +219,7 @@ const Ews = () => {
 
                   {scholarship.steps && scholarship.steps.length > 0 && (
                     <div className="scholarship-steps">
-                      <h4>Application Steps:</h4>
+                      <h4>{t('ews.scholarship.steps')}:</h4>
                       {scholarship.steps.map((step, idx) => (
                         <div key={idx} className="step-section">
                           <strong>{step.title}:</strong>
@@ -234,7 +235,7 @@ const Ews = () => {
 
                   {scholarship.requiredDocuments && scholarship.requiredDocuments.length > 0 && (
                     <div className="required-documents">
-                      <h4>Required Documents:</h4>
+                      <h4>{t('ews.scholarship.documents')}:</h4>
                       <ul>
                         {scholarship.requiredDocuments.map((doc, idx) => (
                           <li key={idx}>
@@ -253,14 +254,14 @@ const Ews = () => {
                         rel="noopener noreferrer"
                         className="btn-link"
                       >
-                        Visit Official Website
+                        {t('ews.scholarship.apply')}
                       </a>
                     )}
                     <button
                       onClick={() => downloadPDF(scholarship)}
                       className="btn-download"
                     >
-                      📥 Download PDF
+                      📥 {t('ews.scholarship.downloadPDF')}
                     </button>
                     <button
                       onClick={() => {
@@ -270,7 +271,7 @@ const Ews = () => {
                       }}
                       className="btn-request"
                     >
-                      📋 Request Form Fill
+                      📋 {t('nav.formHelp')}
                     </button>
                   </div>
                 </div>
@@ -291,10 +292,8 @@ const Ews = () => {
   return (
     <div className="merit-container">
       <div className="merit-form-wrapper">
-        <h1 className="page-title">EWS (Economically Weaker Section) Benefits Eligibility</h1>
-        <p className="page-description">
-          Fill in your details to find EWS scholarships and benefits you're eligible for. Family income must be below Rs. 8 lakh per annum.
-        </p>
+        <h1 className="page-title">{t('ews.title')}</h1>
+        <p className="page-description">{t('ews.subtitle')}</p>
 
         <form onSubmit={handleSubmit} className="merit-form">
           <div className="form-section">
@@ -519,7 +518,7 @@ const Ews = () => {
 
           <div className="form-actions">
             <button type="submit" className="btn-primary" disabled={loading}>
-              {loading ? 'Checking Eligibility...' : 'Check Eligibility'}
+              {loading ? t('ews.loading') : t('ews.submit')}
             </button>
             <button
               type="button"
