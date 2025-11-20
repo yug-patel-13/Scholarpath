@@ -13,7 +13,7 @@ const Contact = () => {
 
   const fetchdata = async () => {
     try {
-      const res = await axios.get('http://localhost:7000/api/feed');
+      const res = await axios.get('http://localhost:5000/api/feed');
       console.log(res.data); // optional
     } catch (err) {
       console.error("Error fetching feedback:", err);
@@ -28,7 +28,7 @@ const Contact = () => {
     e.preventDefault();
 
     try {
-       await axios.post('http://localhost:7000/api/feedback', {
+       await axios.post('http://localhost:5000/api/feedback', {
         name,
         phone,
         email,
@@ -50,7 +50,7 @@ const Contact = () => {
   return (
     <div className="contact-container">
       <h1>{t('contact.title')}</h1>
-      <p className="contact-subtitle">{t('contact.subtitle')}</p>
+ 
       <form onSubmit={handleSubmit} className="contact-form">
         <input
           type="text"

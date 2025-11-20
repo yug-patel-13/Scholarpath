@@ -95,6 +95,25 @@ const Merit = () => {
     }
   };
 
+  const findNearestCyberCafe = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          window.open(
+            `https://www.google.com/maps/search/cyber+cafe/@${latitude},${longitude},12z`,
+            '_blank'
+          );
+        },
+        (error) => {
+          alert('Could not get location. Please enable location services.');
+        }
+      );
+    } else {
+      alert('Geolocation is not supported by your browser.');
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -181,24 +200,7 @@ const Merit = () => {
     doc.save(`${scholarship.title.replace(/\s+/g, '_')}.pdf`);
   };
 
-  const findNearestCyberCafe = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          window.open(
-            `https://www.google.com/maps/search/cyber+cafe/@${latitude},${longitude},12z`,
-            '_blank'
-          );
-        },
-        (error) => {
-          alert('Could not get location. Please enable location services.');
-        }
-      );
-    } else {
-      alert('Geolocation is not supported by your browser.');
-    }
-  };
+  
 
   if (!isAuthenticated) {
     return null;
@@ -278,9 +280,15 @@ const Merit = () => {
                     >
                       📥 {t('merit.scholarship.downloadPDF')}
                     </button>
-                    <button onClick={findNearestCyberCafe} className="btn-secondary">
+
+                    <button
+                      onClick={() => findNearestCyberCafe()}
+                      className="btn-cyber"
+                      title="Find nearest cyber cafe"
+                    >
                       📍 Find Cyber Cafe
                     </button>
+
                     <button
                       onClick={() => {
                         navigate('/form-fill-request', {

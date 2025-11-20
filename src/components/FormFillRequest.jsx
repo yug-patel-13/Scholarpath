@@ -16,7 +16,7 @@ const FormFillRequest = () => {
     contactPhone: '',
     contactEmail: '',
     address: '',
-    pincode: '',
+    pincode: '382418',
     preferredDate: '',
     preferredTime: '',
   });
@@ -221,8 +221,9 @@ const FormFillRequest = () => {
           {formData.requestType === 'offline' && (
             <div className="info-badge">
               <p>
-                Offline booking service is coming soon! You can still submit the request, and we'll
+                Offline booking service is coming soon! You can still submit the request(on 382418 pincode only), and we'll
                 notify you when it's available.
+                
               </p>
             </div>
           )}
@@ -279,13 +280,14 @@ const FormFillRequest = () => {
 
         <div className="form-row">
           <div className="form-group">
-            <label>Contact Phone</label>
+            <label>Contact Phone <span className="required">*</span></label>
             <input
               type="tel"
               name="contactPhone"
               value={formData.contactPhone}
               onChange={handleChange}
               placeholder={user.phone || 'Enter phone number'}
+              required
             />
           </div>
 
@@ -304,7 +306,7 @@ const FormFillRequest = () => {
         {formData.requestType === 'offline' && (
           <>
             <div className="form-group">
-              <label>Address</label>
+              <label>Address <span className="required">*</span></label>
               <textarea
                 name="address"
                 value={formData.address}
@@ -316,13 +318,14 @@ const FormFillRequest = () => {
 
             <div className="form-row">
               <div className="form-group">
-                <label>Pincode</label>
+                <label>Pincode  <span className="required">*</span> </label>
                 <input
                   type="text"
                   name="pincode"
                   value={formData.pincode}
                   onChange={handleChange}
                   placeholder="Enter pincode"
+                  disabled
                 />
               </div>
 

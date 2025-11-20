@@ -395,6 +395,27 @@
   color: #ffffff;
 }
 
+/* Cyber cafe finder button */
+.btn-cyber {
+  background: linear-gradient(135deg, #ffaf40 0%, #ff7a18 100%);
+  color: #ffffff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 15px rgba(255, 125, 18, 0.25);
+}
+.btn-cyber:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 125, 18, 0.35);
+}
+
 .scholarship-actions {
   display: flex;
   gap: 10px;

@@ -91,7 +91,7 @@ const Home = ({ username }) => {
         <div className="hero-content">
           <h1 className="hero-title">
             <span className="hero-title-line line-1">{t('home.hero.title')}</span>
-            <span className="hero-title-line line-2 gradient-text">Scholarship</span>
+        
           </h1>
           <p className="hero-subtitle">
             {t('home.hero.subtitle', 'Discover scholarships and benefits you\'re eligible for based on your profile')}
